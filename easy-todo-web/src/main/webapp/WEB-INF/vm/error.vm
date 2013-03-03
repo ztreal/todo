@@ -1,0 +1,33 @@
+#* @vtlvariable name="exception" type="java.lang.Exception" *#
+#* @vtlvariable name="result" type="com.easy.todo.web.result.Result" *#
+#set($title = "出错了")
+<link rel="stylesheet" type="text/css" href="$assetModule.getTarget("/todo/skin/todo.purchase.css")" />
+<div class="w box" id="mp">
+    <div class="mt"><h2>出错啦�</h2><b></b></div>
+    <div class="mc">
+        <div class="i-box">
+            <div class="success"><b></b>
+              <ul  style="font-size:14px">
+                #if($exception)
+                    $!exception.printStackTrace()
+                    #if($!exception.class.simpleName=="NoSuchMethodException")
+                        $!response.setStatus(404)
+                        <li>系统错误/li>
+                    #elseif($!exception.message)
+                        <li> 系统错误  $!exception.message </li>
+                    #else
+                        <li>系统错误</li>
+                    #end
+                #else
+                   <li> #showSimpleError()&nbsp; </li>
+                #end
+                  </ul>
+                <div class="i-text" style="padding-left:60px">
+                    <a href="http://www.kuailaiqiang.com ">easy-todo;</a>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

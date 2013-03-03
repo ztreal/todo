@@ -1,0 +1,12 @@
+<head>
+    <title>#if($title)$title#else Œﬁ±ÍÃ‚ #end</title>
+    <LINK rel=stylesheet type=text/css href="$homeModule.getTarget("/common/css/common20100719.css")">
+    <LINK rel=stylesheet type=text/css href="$homeModule.getTarget("/common/css/user.game.css")">
+    <link rel="stylesheet" type="text/css" href="$assetModule.getTarget("/pop-man/201007/skin/erpbase.css")" media="all"/>
+    <script type="text/javascript" src="$assetModule.getTarget("/js/jquery-1.4.2.min.js")"></script>
+    <script type="text/javascript" src="$assetModule.getTarget("/pop-man/201007/js/pop.base.js")"></script>
+	<script type="text/javascript" src="$homeModule.getTarget("/common/js/common.js")"></script>
+    <script type="text/javascript" src="$assetModule.getTarget("/pop-man/201007/js/jquery.validate.min.js")"></script>
+    <script type="text/javascript" src="$assetModule.getTarget("/pop-man/201007/js/jquery.metadata.js")"></script>
+    <script type="text/javascript"  src="$assetModule.getTarget("/pop-man/201007/js/jquery.validate.popext.js")"></script>
+</head>

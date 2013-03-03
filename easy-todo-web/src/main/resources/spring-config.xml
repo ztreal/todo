@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName">
+    <!-- 属性文件读入 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:todo-production.properties</value>
+			</list>
+		</property>
+	</bean>
+    <import resource="spring-config-mongo.xml"/>
+	<import resource="spring-config-dao.xml" />
+	<import resource="spring-config-manager.xml" />
+	<import resource="spring-config-service.xml" />
+    <import resource="spring-config-struts.xml"/>
+</beans>

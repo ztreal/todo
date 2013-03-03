@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName">
+	<bean name="velocityTools" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="stringUtils">
+					<bean class="org.apache.commons.lang.StringUtils" />
+				</entry>
+				<entry key="stringEscapeUtils">
+					<bean class="com.jd.common.util.StringEscapeUtils" />
+				</entry>
+				<entry key="dateFormatUtils">
+					<bean class="com.jd.common.util.DateFormatUtils" />
+				</entry>
+				<entry key="dateUtils">
+					<bean class="org.apache.commons.lang.time.DateUtils" />
+				</entry>
+				<entry key="localHost">
+					<bean class="com.jd.common.network.LocalHost" />
+				</entry>
+				<entry key="decimalFormatUtils">
+					<bean class="com.jd.common.util.DecimalFormatUtils" />
+				</entry>
+				<entry key="hrmPrivilegeHelper" value-ref="hrmPrivilegeHelper" />
+                <entry key="enumUtils">
+                    <bean class="com.easytodo.com.web.util.EnumUtils"/>
+                </entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean id="jdSecurity" class="com.jd.common.web.security.FilePathSecurity">
+		<property name="unProtectedFile">
+			<list>
+				<value>/topFrame.action</value>
+				<value>/leftFrame.action</value>
+				<value>/login.action</value>
+				<value>/logout.action</value>
+			</list>
+		</property>
+		<property name="unProtectedPath">
+			<list>
+				<value>/help/</value>
+			</list>
+		</property>
+	</bean>
+    <bean id="venderInfoMap" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="yunwang" value="${todoman.cntodo.venderid}"/>
+                <entry key="51todo" value="${todoman.xqt.venderid}"/>
+                <entry key="virtual" value="${todoman.virtual.venderid}"/>
+            </map>
+        </constructor-arg>
+    </bean>
+	<bean id="jdUrlUtils" class="com.jd.common.web.url.JdUrlUtils" />
+	<bean id="velocityUrl" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+                <!--本系统自己地址-->
+				<entry key="homeModule">
+					<bean class="com.jd.common.web.url.JdUrl">
+						<property name="url" value="http://${todoman.domain.name}/" />
+					</bean>
+				</entry>
+				<!--登录的 -->
+				<entry key="loginUrl">
+					<bean class="com.jd.common.web.url.JdUrl">
+						<property name="url" value="${todoman.login.address}" />
+					</bean>
+				</entry>
+                <!--样式、js、图片地址-->
+				<entry key="assetModule">
+					<bean class="com.jd.common.web.url.JdUrl">
+						<property name="url" value="http://${todoman.asset.domain.name}/" />
+					</bean>
+				</entry>
+                <!--类目属性MAN链接-->
+                <entry key="todoCategory">
+                    <bean class="com.jd.common.web.url.JdUrl">
+                        <property name="url" value="http://${todoman.category.address}" />
+                    </bean>
+                </entry>
+                <!--点卡虚拟类目-->
+                <entry key="todoVirtualCategory">
+                    <bean class="com.jd.common.web.url.JdUrl">
+                        <property name="url" value="http://${todoman.virtual.category.address}" />
+                    </bean>
+                </entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean id="cookieCipherTools" class="com.jd.common.web.cookie.CookieCipherTools">
+		<property name="charsetName" value="gbk" />
+	</bean>
+	<bean id="cookieUtils" class="com.jd.common.web.cookie.CookieUtils" />
+	<bean class="com.jd.common.web.cookie.JdCookie" abstract="true" id="jdEncryptCookie">
+		<property name="encrypt" value="true" />
+		<property name="key" value="${todoman.cookie.key}" />
+        <!--<property name="domain" value="${todoman.cookie.domain}"/>-->
+	</bean>
+	<bean abstract="true" parent="jdEncryptCookie" id="jdLoginCookie">
+		<property name="path" value="/" />
+        <!--<property name="domain" value="${todoman.cookie.domain}"/>-->
+	</bean>
+	<bean id="jdCookie" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<bean parent="jdLoginCookie">
+					<property name="name" value="${todoman.cookie.name}" />
+				</bean>
+				<bean parent="jdLoginCookie">
+					<property name="name" value="_latn_" />
+				</bean>
+				<bean class="com.jd.common.web.cookie.JdCookie">
+					<property name="name" value="${todoman.hrm.auth.cookie.name}" />
+					<property name="domain" value="${todoman.hrm.auth.cookie.domain}" />
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="deptWebService" class="com.jd.common.struts.interceptor.ws.DeptWebService" factory-bean="jcClientFactory" factory-method="create" />
+	<bean id="soapHeaderIntercepter" class="com.jd.common.ws.SOAPHeaderIntercepter">
+		<property name="authHeader">
+			<bean class="com.jd.common.ws.AuthHeader">
+				<property name="content" value="${todoman.hrm.ws.content}" />
+				<property name="seed" value="${todoman.hrm.ws.seed}" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jcClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jd.common.struts.interceptor.ws.DeptWebService" />
+		<property name="address" value="${todoman.hrm.auth.address}" />
+		<property name="outInterceptors">
+			<list>
+				<ref local="soapHeaderIntercepter" />
+			</list>
+		</property>
+	</bean>
+	<bean class="com.jd.common.struts.velocity.VelocityLayoutResult" />
+	<bean class="com.jd.common.struts.interceptor.LoginContextInterceptor">
+		<property name="loginCookieKey" value="${todoman.cookie.name}" />
+		<property name="sessionTimeout" value="${todoman.session.timeout}" />
+	</bean>
+	<bean id="hrmPrivilegeHelper" class="com.jd.common.struts.interceptor.HrmPrivilegeHelper" />
+	<bean class="com.jd.common.struts.interceptor.HrmPrivilegeInterceptor" />
+	<bean class="com.jd.common.struts.interceptor.DotnetSecurityInterceptor">
+		<property name="loginCookieKey" value="${todoman.cookie.name}" />
+		<property name="loginErrorResult" value="login_error" />
+		<property name="loginUrl" value="loginUrl" />
+		<property name="dotnetAuthCookieName" value="${todoman.hrm.auth.cookie.name}" />
+		<property name="dotnetAuthenticationKey" value="${todoman.hrm.login.auth.key}" />
+	</bean>
+	<bean class="com.easytodo.com.web.action.IndexAction">
+		<property name="logoutCookie">
+			<list>
+				<value>${todoman.cookie.name}</value>
+				<value>${todoman.hrm.auth.cookie.name}</value>
+			</list>
+		</property>
+	</bean>
+    <bean class="com.easytodo.com.web.action.order.OrderAction" scope="prototype" >
+        <property name="statPath" value="${todoman.stat.path}"/>
+    </bean>
+</beans>

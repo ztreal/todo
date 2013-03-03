@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='GBK' ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="CONSOLE-DEBUG" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+        </filter>
+    </appender>
+    <appender name="CONSOLE-INFO" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+    <appender name="FILE-ALL" class="org.apache.log4j.RollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${todo.log.path}/todo-all.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    <appender name="FILE-AOP" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${todo.log.path}/todo-aop.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    <appender name="FILE-SQL" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${todo.log.path}/todo-sql.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    <appender name="FILE-VELOCITY" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${todo.log.path}/todo-velocity.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    <appender name="FILE-INDEX-OPT" class="org.apache.log4j.RollingFileAppender">
+        <param name="MaxFileSize" value="1MB"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${todo.log.path}/todo-index.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    <category name="INDEX-OPT" additivity="false">
+        <priority value="${card.log.level}"/>
+        <appender-ref ref="FILE-INDEX-OPT"/>
+        <appender-ref ref="CONSOLE-DEBUG"/>
+        <appender-ref ref="FILE-ALL"/>
+    </category>
+    <category name="java.sql" additivity="false">
+        <priority value="ERROR"/>
+        <appender-ref ref="FILE-SQL"/>
+        <appender-ref ref="CONSOLE-DEBUG"/>
+        <appender-ref ref="FILE-ALL"/>
+    </category>
+    <category name="org.apache.velocity" additivity="false">
+        <priority value="${todo.log.level}"/>
+        <appender-ref ref="FILE-VELOCITY"/>
+        <appender-ref ref="FILE-ALL"/>
+    </category>
+    <category name="com.opensymphony.xwork2" additivity="false">
+        <priority value="info"/>
+        <appender-ref ref="FILE-ALL"/>
+    </category>
+    <root>
+        <priority value="${todo.log.level}"/>
+        <appender-ref ref="CONSOLE-INFO"/>
+        <appender-ref ref="FILE-ALL"/>
+    </root>
+</log4j:configuration>

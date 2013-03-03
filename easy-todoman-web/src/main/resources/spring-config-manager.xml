@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+        <bean id="priceManager" class="com.easytodo.com.manager.price.impl.PriceManagerImpl"/>
+    <!-- 事务处理 -->
+    <bean id="todoTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+
+    <!--虚拟点卡订单管理-->
+    <bean id="todoOrderManager" class="com.easytodo.com.manager.order.impl.todoOrderManagerImpl"/>
+    <bean id="todotodoDetailManager" class="com.easytodo.com.manager.order.impl.todotodoDetailManagerImpl"/>
+    <bean id="todoGameDistrictManager" class="com.easytodo.com.manager.game.impl.todoGameDistrictManagerImpl"/>
+    <bean id="bussinessProcessManager" class="com.easytodo.com.manager.bussinessprocess.impl.BussinessProcessManagerImpl"/>
+    <bean id="cacheUtils" class="com.jd.common.cached.CacheUtils" destroy-method="shutdown">
+        <property name="cacheServerAddress">
+            <list>
+                <value>${todoman.memcached1.address}</value>
+                <value>${todoman.memcached2.address}</value>
+                <value>${todoman.memcached3.address}</value>
+                <value>${todoman.memcached4.address}</value>
+                <value>${todoman.memcached5.address}</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="httpClientManager" class="com.easytodo.com.threerd.gw.manager.impl.HttpClientManagerImpl">
+        <property name="maxPerRoute" value="${todoman.http.maxPerRoute}"/>
+        <property name="maxTotal" value="${todoman.http.maxTotal}"/>
+        <!-- 毫秒为单位 -->
+        <property name="connectionTimeout" value="${todoman.http.connectionTimeout}"/>
+        <!-- 秒为单位 -->
+        <property name="connTTL" value="${todoman.http.connTTL}"/>
+    </bean>
+
+    <bean id="httpClientHelper" class="com.easytodo.com.threerd.gw.helper.HttpClientHelper">
+        <property name="httpClientManager" ref="httpClientManager"/>
+    </bean>
+
+    <bean id="todoOrderDetailManager" class="com.easytodo.com.manager.order.impl.todoOrderDetailManagerImpl"/>
+
+    <!--类目属性-->
+    <bean id="localCategoryManager" class="com.easytodo.com.manager.category.impl.LocalCategoryManagerImpl"/>
+
+    <bean id="skuManager" class="com.easytodo.com.manager.sku.impl.SkuManagerImpl"/>
+    <bean id="todoSaleStateManager" class="com.easytodo.com.manager.order.impl.todoSaleStateManagerImpl"/>
+    <bean id="GametodoManager" class="com.easytodo.com.manager.game.impl.GametodoManagerImpl">
+        <property name="saleMemLiveTime" value="${todoman.cntodo.interface.querysalestatus.memLiveTime}"/>
+        <property name="districtMemLiveTime" value="${todoman.cntodo.interface.querygamezone.memLiveTime}"/>
+    </bean>
+
+    <bean id="todoRefundManager" class="com.easytodo.com.manager.finance.impl.todoRefundManagerImpl"/>
+
+    <bean id="iceManager" class="com.jd.common.manager.ice.impl.IceManagerImpl"/>
+
+    <bean id="popCategoryManager" class="com.easytodo.com.manager.order.impl.PopCategoryManagerImpl"/>
+
+     <bean id="indexInfoManager" class="com.easytodo.com.manager.view.impl.IndexInfoManagerImpl"/>
+     <bean id="operateLogManager" class="com.easytodo.com.manager.operateLog.impl.OperateLogManagerImpl"/>
+    <bean id="statManager" class="com.easytodo.com.manager.stat.impl.StatManagerImpl" scope="prototype">
+        <property name="statPath" value="${todoman.stat.path}"/>
+        <property name="todomanPath" value="${todoman.root.path}"/>
+    </bean>
+    <bean id="wareManager" class="com.easytodo.com.manager.ware.impl.WareManagerImpl"/>
+    <bean id="attrManager" class="com.easytodo.com.manager.attr.impl.AttrManagerImpl"/>
+    <bean id="attrValueManager" class="com.easytodo.com.manager.attr.impl.AttrValueManagerImpl"/>
+    <bean id="skuAttrManager" class="com.easytodo.com.manager.price.impl.SkuAttrManagerImpl"/>
+</beans>

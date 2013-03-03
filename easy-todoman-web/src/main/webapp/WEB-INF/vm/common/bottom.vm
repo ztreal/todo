@@ -1,0 +1,2 @@
+#* @vtlvariable name="localHost" type="com.jd.common.network.LocalHost" *#
+<span   style="display:block;color:white;" >$localHost.machineName</span>

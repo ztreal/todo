@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="todomanDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/todomanDataSource" />
+		<property name="expectedType" value="javax.sql.DataSource" />
+	</bean>
+
+    <bean id="popuserDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/popuserDataSource"/>
+        <property name="expectedType" value="javax.sql.DataSource"/>
+    </bean>
+
+    <bean id="popdirDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/popdirDataSource"/>
+        <property name="expectedType" value="javax.sql.DataSource"/>
+    </bean>
+
+     <bean id="popwareDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/popwareDataSource"/>
+        <property name="expectedType" value="javax.sql.DataSource"/>
+    </bean>
+
+</beans>

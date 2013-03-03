@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMapConfig  PUBLIC "-//iBATIS.com//DTD SQL Map
+Config 2.0/" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="false" errorTracingEnabled="true" maxRequests="32"
+		maxSessions="10" maxTransactions="5" useStatementNamespaces="true" />
+	<sqlMap resource="sqlmap/todoOrder.xml" />
+    <sqlMap resource="sqlmap/todoOrderDetail.xml" />
+    <sqlMap resource="sqlmap/todotodoDetail.xml" />
+    <sqlMap resource="sqlmap/todoGameDistrict.xml" />
+    <sqlMap resource="sqlmap/todoRefund.xml" />
+    <sqlMap resource="sqlmap/BussniessProcess.xml" />
+    <sqlMap resource="sqlmap/PopCategory.xml" />
+    <sqlMap resource="sqlmap/Ware.xml" />
+    <sqlMap resource="sqlmap/Category.xml"/>
+    <sqlMap resource="sqlmap/Attribute.xml"/>
+    <sqlMap resource="sqlmap/CategoryValue.xml"/>
+</sqlMapConfig>

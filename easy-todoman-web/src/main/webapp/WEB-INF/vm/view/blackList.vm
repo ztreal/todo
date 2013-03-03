@@ -1,0 +1,35 @@
+#set($title = "二级页静态更新")
+<script type="text/javascript" src="$assetModule.getTarget("/pop-ven/201007/js/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="$assetModule.getTarget("/pop-ven/201007/js/jquery.metadata.js")"></script>
+<script type="text/javascript" src="$assetModule.getTarget("/pop-ven/201007/js/jquery.validate.popext.js")"></script>
+<div id="content">
+    <div class="i-con1 table_list">
+        <div class="tb-x1 resultlist">
+            <div class="btns">
+                <font color="red" size="4">
+                #showSimpleError()
+                #showSimpleMessage()
+                黑名单设置提示：用户名加“;”
+                </font>
+               <form id="blackform" name="blackform" action="blackList_createBlackList.action" method="POST">
+                    <textarea rows="30" cols="130" id="indexInfo.content" name="indexInfo.content" class="{required:true}">$!stringEscapeUtils.escapeHtml($!ViewContent)</textarea>
+                   <div class="btn-area-a">
+                    <br>
+                     <input id="indexInfo.id" name="indexInfo.id" value="$!blackListId" type="hidden" />
+                    <input id="viewPubBtn" name="viewPubBtn" type="submit" value="保&nbsp存" class="bhn-r-s"/>
+                   </div>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery("#blackform").validate({
+        submitHandler: function(form) {
+            form.action="blackList_createBlackList.action";
+            form.target="_self";
+            form.method="POST";
+            form.submit();
+        }
+    });
+</script>

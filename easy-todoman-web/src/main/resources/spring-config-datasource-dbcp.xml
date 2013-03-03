@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="todomanDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${todoman.jdbc.driver}"/>
+        <property name="url" value="${todoman.jdbc.url}"/>
+        <property name="username" value="${todoman.jdbc.username}"/>
+        <property name="password" value="${todoman.jdbc.password}"/>
+    </bean>
+
+    <bean id="popuserDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${todoman.jdbc.popuser.driver}"/>
+        <property name="url" value="${todoman.jdbc.popuser.url}"/>
+        <property name="username" value="${todoman.jdbc.popuser.username}"/>
+        <property name="password" value="${todoman.jdbc.popuser.password}"/>
+    </bean>
+
+    <bean id="popdirDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${todoman.jdbc.popuser.driver}"/>
+        <property name="url" value="${todoman.jdbc.popdir.url}"/>
+        <property name="username" value="${todoman.jdbc.popdir.username}"/>
+        <property name="password" value="${todoman.jdbc.popdir.password}"/>
+    </bean>
+    <bean id="popwareDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${todoman.jdbc.popuser.driver}"/>
+        <property name="url" value="${todoman.jdbc.popware.url}"/>
+        <property name="username" value="${todoman.jdbc.popware.username}"/>
+        <property name="password" value="${todoman.jdbc.popware.password}"/>
+    </bean>
+</beans>

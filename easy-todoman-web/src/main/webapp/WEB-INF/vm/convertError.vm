@@ -1,0 +1,20 @@
+#* @vtlvariable name="exception" type="java.lang.Exception" *#
+#* @vtlvariable name="result" type="com.jd.common.web.result.Result" *#
+<link rel="stylesheet" type="text/css" href="$assetModule.getTarget("/todo/skin/todo.purchase.css")" />
+<div class="w box" id="mp">
+    <div class="mt"><h2>��Ϸ�㿨ֱ��/����</h2><b></b></div>
+    <div class="mc">
+        <div class="i-box">
+            <div class="success"><b></b>
+              <ul  style="font-size:14px">
+                        <li>�������</li>
+                  </ul>
+                <div class="i-text" style="padding-left:60px">
+                    <a href="http://www.todo.com ">������ҳ&gt;&gt;</a>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

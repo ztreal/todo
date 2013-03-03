@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="gbk"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <profiles>
+        <profile>
+            <id>production</id>
+            <properties>
+                <!-- 开始 第一部分: 登录相关设置 -->
+
+                <!-- 结束 第一部分: 登录相关设置 -->
+
+                <!-- 开始 第二部分: 数据库配置，发布时需运维配置JNDI -->
+                <!--数据库连接的方式-->
+                <todo.jdbc.datasource.type>jndi</todo.jdbc.datasource.type>
+                <!-- 结束 第二部分: 数据库配置，发布时需运维配置JNDI -->
+
+                <!-- 开始 第三部分: 服务器配置，发布时需找运维确定 -->
+
+
+                <!-- 结束 第三部分: 服务器配置，发布时需找运维确定 -->
+
+                <!-- 开始 第四部分: 开发设置 -->
+
+                <!-- 结束第四部分: 开发设置 -->
+
+                <!-- 开始 第五部分: 依赖的外部接口，发布时需找接口人确定 -->
+
+                <!-- 开始 第六部分: 提供给别人的接口，发布时需通知调用人 -->
+
+                <!-- 结束 第七部分: 开发框架配置，发布人修改 -->
+                <!-- 部署到生产环境 -->
+                <todoman.cntodo.env.production>true</todoman.cntodo.env.production>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>production</activeProfile>
+    </activeProfiles>
+
+ </settings>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="view" namespace="/view" extends="todoman-default">
+       <action name="indexInfo_*" method="{1}" class="com.easytodo.com.web.action.view.IndexInfoAction">
+          <result>/WEB-INF/vm/view/indexInfo.vm</result>
+          <result name="preview">/WEB-INF/vm/view/previewIndexInfo.vm</result>
+          <result type="chain" name="input.query">indexInfo_queryIndexInfo</result>
+       </action>
+       <action name="secondInfo_*" method="{1}" class="com.easytodo.com.web.action.view.SecondInfoAction">
+          <result>/WEB-INF/vm/view/secondInfo.vm</result>
+          <result name="preview">/WEB-INF/vm/view/previewSecondInfo.vm</result>
+          <result type="chain" name="input.query">secondInfo_querySecondInfo</result>
+       </action>
+        <action name="blackList_*" method="{1}" class="com.easytodo.com.web.action.view.BlackListAction">
+          <result>/WEB-INF/vm/view/blackList.vm</result>
+          <result type="chain" name="input.query">blackList_queryBlackList</result>
+       </action>
+    </package>
+</struts>

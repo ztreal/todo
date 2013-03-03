@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="GB2312"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>easy-todo</artifactId>
+    <groupId>com.easytodo.com</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+    
+  <groupId>com.easytodo.com</groupId>
+  <artifactId>easy-todo-rpc</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>easy-todo-rpc</name>
+  <url>http:/todo.zt.com</url>
+   <properties>
+     <cxf.version>2.2.4</cxf.version>
+   </properties>
+  
+
+
+  <dependencies>
+       <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+      <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-rt-transports-http</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-rt-ws-rm</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-rt-ws-security</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-rt-ws-addr</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-rt-ws-policy</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.cxf</groupId>
+                 <artifactId>cxf-common-utilities</artifactId>
+                 <version>${cxf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>javax.servlet</groupId>
+                 <artifactId>servlet-api</artifactId>
+                 <version>2.4</version>
+                 <scope>provided</scope>
+             </dependency>
+             <dependency>
+                 <groupId>com.easytodo.com</groupId>
+                 <artifactId>easy-todo-domain</artifactId>
+                 <version>1.0-SNAPSHOT</version>
+                 <scope>compile</scope>
+             </dependency>
+        
+  </dependencies>
+
+</project>

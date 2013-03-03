@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+        "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="todoOrder">
+    <typeAlias alias="todoOrder" type="com.easytodo.com.domain.order.todoOrder"/>
+    <typeAlias alias="todoOrderQuery" type="com.easytodo.com.domain.order.query.todoOrderQuery"/>
+
+    <resultMap id="todoOrderResultMap" class="todoOrder">
+        <result property="orderId" column="order_id" jdbcType="LONG" nullValue="0"/>
+        <result property="payId" column="pay_id" jdbcType="VARCHAR"/>
+        <result property="payTime" column="pay_time"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER" nullValue="0"/>
+        <result property="venderId" column="vender_id" jdbcType="INTEGER" nullValue="0"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="orderStatus" column="order_status" jdbcType="INTEGER" nullValue="0"/>
+        <result property="finStatus" column="fin_status" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="origin" column="origin"/>
+        <result property="credit" column="credit"/>
+        <result property="youhui" column="youhui"/>
+        <result property="money" column="money"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="memo" column="memo" jdbcType="VARCHAR"/>
+        <result property="features" column="features" jdbcType="VARCHAR"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+        <result property="finished" column="finished"/>
+        <result property="firstPickup" column="first_pickup"/>
+        <result property="costPrice" column="cost_price"/>
+        <result property="userIp" column="user_ip"/>
+    </resultMap>
+
+    <resultMap id="todoOrderInfoResultMap" class="todoOrder" extends="todoOrderResultMap">
+        <result property="orderDetail.skuName" column="sku_name"/>
+        <result property="orderDetail.quantity" column="quantity"  jdbcType="LONG" nullValue="0"/>
+        <result property="orderDetail.skuId" column="sku_id"  jdbcType="LONG" />
+    </resultMap>
+
+    <resultMap id="OrderAndOrderDetailResultMap" class="todoOrder" extends="todoOrderResultMap">
+        <result property="orderDetail.id" column="id" jdbcType="LONG"/>
+        <result property="orderDetail.orderId" column="order_id" jdbcType="LONG"/>
+        <result property="orderDetail.skuId" column="sku_id" jdbcType="LONG"/>
+        <result property="orderDetail.venderId" column="vender_id" jdbcType="INTEGER"/>
+        <result property="orderDetail.skuName" column="sku_name" jdbcType="VARCHAR"/>
+        <result property="orderDetail.price" column="price" jdbcType="LONG"/>
+        <result property="orderDetail.quantity" column="quantity" jdbcType="LONG"/>
+        <result property="orderDetail.state" column="state" jdbcType="INTEGER"/>
+        <result property="orderDetail.features" column="features" jdbcType="LONG"/>
+        <result property="orderDetail.created" column="created"  />
+        <result property="orderDetail.modified" column="modified" />
+    </resultMap>
+
+
+    <resultMap id="todoOrderForMsgResultMap" class="todoOrder">
+        <result property="orderId" column="order_id" jdbcType="LONG" nullValue="0"/>
+        <result property="venderId" column="vender_id" jdbcType="INTEGER" nullValue="0"/>
+        <result property="finished" column="finished" />
+        <result property="created" column="created"/>
+        <result property="orderStatus" column="order_status" jdbcType="INTEGER" nullValue="0"/>
+        <result property="origin" column="origin"/>
+         <result property="costPrice" column="cost_price"/>
+        <result property="orderDetail.quantity" column="quantity" jdbcType="LONG"/>
+    </resultMap>
+
+
+    <sql id="selectAll">
+        order_id,
+        pay_id,
+        pay_time,
+        user_id,
+        vender_id,
+        user_name,
+        mobile,
+        state,
+        order_status,
+        fin_status,
+        type,
+        origin,
+        credit,
+        youhui,
+        money,
+        remark,
+        memo,
+        features,
+        created,
+        modified,
+        finished,
+        first_pickup,
+        cost_price,
+        user_ip
+    </sql>
+
+
+    <sql id="selectAllJoin">
+        todo_order.order_id,
+        todo_order.pay_id,
+        todo_order.pay_time,
+        todo_order.user_id,
+        todo_order.vender_id,
+        todo_order.user_name,
+        todo_order.mobile,
+        todo_order.state,
+        todo_order.order_status,
+        todo_order.fin_status,
+        todo_order.type,
+        todo_order.origin,
+        todo_order.credit,
+        todo_order.youhui,
+        todo_order.money,
+        todo_order.remark,
+        todo_order.memo,
+        todo_order.features,
+        todo_order.created,
+        todo_order.modified,
+        todo_order.finished,
+        todo_order.first_pickup,
+        todo_order.cost_price,
+        todo_order.user_ip,
+        todo_order_detail.sku_name,
+        todo_order_detail.quantity,
+        todo_order_detail.sku_id
+    </sql>
+
+    <sql id="selectAllJoinTable">
+        t1.order_id,
+        t1.pay_id,
+        t1.pay_time,
+        t1.user_id,
+        t1.vender_id,
+        t1.user_name,
+        t1.mobile,
+        t1.state,
+        t1.order_status,
+        t1.fin_status,
+        t1.type,
+        t1.origin,
+        t1.credit,
+        t1.youhui,
+        t1.money,
+        t1.remark,
+        t1.memo,
+        t1.features,
+        t1.created,
+        t1.modified,
+        t1.finished,
+        t1.first_pickup,
+        t1.cost_price,
+        t1.user_ip,
+        t2.id,
+        t2.order_id,
+        t2.sku_id,
+        t2.vender_id,
+        t2.sku_name,
+        t2.price,
+        t2.quantity,
+        t2.state,
+        t2.features,
+        t2.created,
+        t2.modified
+    </sql>
+
+    <sql id="orderSort">
+        order by
+        <isEqual prepend="" property="orderBy" compareValue="0">
+            todo_order.order_id DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="1">
+            todo_order.order_id ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="2">
+            todo_order.modified DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="3">
+            todo_order.modified ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="4">
+            todo_order.finished DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="5">
+            todo_order.finished ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="6">
+            todo_order.created DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="7">
+            todo_order.created ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="8">
+            todo_order.pay_time DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="9">
+            todo_order.pay_time ASC
+        </isEqual>
+    </sql>
+
+    <insert id="inserttodoOrder" parameterClass="todoOrder">
+        insert into todo_order (
+        <include refid="selectAll"/>
+        ) values (
+        #orderId#,
+        #payId#,
+        #payTime#,
+        #userId#,
+        #venderId#,
+        #userName#,
+        #mobile#,
+        #state#,
+        #orderStatus#,
+        #finStatus#,
+        #type#,
+        #origin#,
+        #credit#,
+        #youhui#,
+        #money#,
+        #remark#,
+        #memo#,
+        #features#,
+        now(),
+        now(),
+        #finished#,
+        #firstPickup#,
+        #costPrice#,
+        #userIp#
+        )
+    </insert>
+
+    <delete id="deletetodoOrder" parameterClass="todoOrder">
+        update todo_order set state = #state# where order_id = #orderId#
+    </delete>
+
+    <update id="updatetodoOrder" parameterClass="todoOrder">
+        update todo_order set first_pickup = now()
+        where order_id = #orderId#
+    </update>
+
+    <update id="updatetodoOrderState" parameterClass="todoOrder">
+        update todo_order set order_status = #orderStatus#, modified = now()
+        <isNotEmpty property="memo">
+            ,memo = #memo#
+        </isNotEmpty>
+        where order_id = #orderId# and order_status=#oldOrderStatus#
+    </update>
+
+    <update id="updatetodoOrderForSuccess" parameterClass="todoOrder">
+        update todo_order set order_status = #orderStatus#, modified = now(),finished=now()
+        where order_id = #orderId# and order_status=#oldOrderStatus#
+    </update>
+
+
+    <!--<update id="updatetodoOrderStateKeepOldState" parameterClass="todoOrder">-->
+        <!--update todo_order set order_status = order_status+#orderStatus#, modified = now()-->
+        <!--where order_id = #orderId# and order_status=#oldOrderStatus#-->
+    <!--</update>-->
+    <!--paytime,money,modified,finished,memo,-->
+    <update id="updateOrderForResetPayExceptionOrder" parameterClass="todoOrder">
+        update todo_order set
+        pay_time = #payTime#,
+        money = #money#,
+        modified = now(),
+        order_status = #orderStatus#,
+        memo = #memo#
+        where order_id = #orderId# and order_status=#oldOrderStatus#
+    </update>
+
+    <update id="updatetodoOrderForPay" parameterClass="todoOrder">
+        update todo_order set
+        pay_id = #payId#,
+        pay_time = #payTime#,
+        money = #money#,
+        modified = now(),
+        order_status = #orderStatus#
+        where order_id = #orderId# and order_status=#oldOrderStatus#
+    </update>
+
+    <select id="gettodoOrderById" parameterClass="long" resultMap="todoOrderResultMap">
+        select
+        <include refid="selectAll"/>
+        from todo_order where order_id = #orderId#
+    </select>
+
+    <sql id="condition">
+        <dynamic prepend="where">
+            <isGreaterThan prepend="and" property="orderId" compareValue="0">
+                order_id = #orderId#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="payId" compareValue="0">
+                pay_id = #payId#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="userId" compareValue="0">
+                user_id = #userId#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="venderId" compareValue="0">
+                vender_id = #venderId#
+            </isGreaterThan>
+            <isNotEmpty prepend="and" property="userName">
+                user_name = #userName#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="state">
+                state = #state#
+            </isNotEmpty>
+            <isGreaterThan prepend="and" property="orderStatus" compareValue="0">
+              <![CDATA[  (order_status&#orderStatus#)=#orderStatus#   ]]>
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="orderEqualStatus" compareValue="0">
+                order_status = #orderEqualStatus#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="orderCombinedStatus" compareValue="0">
+                <iterate prepend="AND " property="orderCombinedStatus" open="(" close=")" conjunction="OR">
+                  <![CDATA[  (order_status&#orderCombinedStatus[]#)=#orderCombinedStatus[]# ]]>
+                </iterate>
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="finStatus" compareValue="0">
+                fin_status = #finStatus#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="type" compareValue="0">
+                type = #type#
+            </isGreaterThan>
+            <isNotEmpty prepend="and" property="createTimeMin">
+                created &gt;= #createTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="createTimeMax">
+                created &lt; #createTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="modifyTimeMin">
+                modified &gt;= #modifyTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="modifyTimeMax">
+                modified &lt;= #modifyTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="payTimeMin">
+                PAY_TIME &gt;= #payTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="payTimeMax">
+                PAY_TIME &lt;= #payTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="finishedTimeMin">
+                FINISHED &gt;= #finishedTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="finishedTimeMax">
+                FINISHED &lt;= #finishedTimeMax#
+            </isNotEmpty>
+            <isGreaterThan prepend="and" property="orderIdMax" compareValue="0">
+                order_id &lt; #orderIdMax#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="orderIdMin" compareValue="0">
+                order_id &gt; #orderIdMin#
+            </isGreaterThan>
+        </dynamic>
+    </sql>
+
+    <sql id="joinDetailCondition">
+            where todo_order.order_id = todo_order_detail.order_id
+            <isGreaterThan prepend="and" property="orderId" compareValue="0">
+                todo_order.order_id = #orderId#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="payId" compareValue="0">
+                todo_order.pay_id = #payId#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="userId" compareValue="0">
+                todo_order.user_id = #userId#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="venderId" compareValue="0">
+                todo_order.vender_id = #venderId#
+            </isGreaterThan>
+            <isNotEmpty prepend="and" property="userName">
+                todo_order.user_name = #userName#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="state" >
+                todo_order.state = #state#
+            </isNotEmpty>
+            <isGreaterThan prepend="and" property="orderStatus" compareValue="0">
+                <![CDATA[ (todo_order.order_status&#orderStatus#)=#orderStatus#  ]]>
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="orderEqualStatus" compareValue="0">
+                todo_order.order_status = #orderEqualStatus#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="orderCombinedStatus" compareValue="0">
+                <iterate prepend="AND " property="orderCombinedStatus" open="(" close=")" conjunction="OR">
+                   <![CDATA[  (todo_order.order_status&#orderCombinedStatus[]#)=#orderCombinedStatus[]#    ]]>
+                </iterate>
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="finStatus" compareValue="0">
+                todo_order.fin_status = #finStatus#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="type" compareValue="0">
+                todo_order.type = #type#
+            </isGreaterThan>
+            <isNotEmpty prepend="and" property="createTimeMin">
+                todo_order.created &gt;= #createTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="createTimeMax">
+                todo_order.created &lt; #createTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="modifyTimeMin">
+               todo_order.modified &gt;= #modifyTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="modifyTimeMax">
+               todo_order.modified &lt;= #modifyTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="payTimeMin">
+                todo_order.PAY_TIME &gt;= #payTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="payTimeMax">
+                todo_order.PAY_TIME &lt;= #payTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="finishedTimeMin">
+                todo_order.FINISHED &gt;= #finishedTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="finishedTimeMax">
+                todo_order.FINISHED &lt;= #finishedTimeMax#
+            </isNotEmpty>
+    </sql>
+
+
+    <sql id="joinCondition">
+        <dynamic prepend="where">
+            <isGreaterThan prepend="and" property="orderId" compareValue="0">
+                t1.order_id = #orderId#
+            </isGreaterThan>
+             <isNotEmpty prepend="and" property="state">
+                t1.state = #state#
+            </isNotEmpty>
+            <isGreaterThan prepend="and" property="type" compareValue="0">
+                t1.type = #type#
+            </isGreaterThan>
+            <isGreaterThan prepend="and" property="orderStatus" compareValue="0">
+                <![CDATA[ (t1.order_status&#orderStatus#)=#orderStatus# ]]>
+            </isGreaterThan>
+            <isNotEmpty prepend="and" property="createTimeMin">
+                t1.created &gt;= #createTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="createTimeMax">
+                t1.created &lt;= #createTimeMax#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="modifyTimeMin">
+                t1.modified &gt;= #modifyTimeMin#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="modifyTimeMax">
+                t1.modified &lt;= #modifyTimeMax#
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+
+    <!--通过条件分页获取order条数-->
+    <select id="findOrderCountByCondition" resultClass="int" parameterClass="todoOrderQuery">
+        select count(1) from todo_order
+        <include refid="condition"/>
+    </select>
+    <!--通过条件分页获取order信息-->
+    <select id="findOrderByCondition" resultMap="todoOrder.todoOrderResultMap" parameterClass="todoOrderQuery">
+        select
+        <include refid="selectAll"/>
+        from todo_order
+        <include refid="condition"/>
+        order by
+        <isEqual prepend="" property="orderBy" compareValue="0">
+            order_id DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="1">
+            order_id ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="2">
+            modified DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="3">
+            modified ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="4">
+            finished DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="5">
+            finished ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="6">
+            created DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="7">
+            created ASC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="8">
+            pay_time DESC
+        </isEqual>
+        <isEqual prepend="" property="orderBy" compareValue="9">
+            pay_time ASC
+        </isEqual>
+        limit #startRow#,#endRow#
+    </select>
+
+
+    <select id="findOrderJoinByCondition" resultMap="todoOrder.todoOrderInfoResultMap" parameterClass="todoOrderQuery">
+        select
+        <include refid="selectAllJoin"/>
+            from todo_order,todo_order_detail
+                    <include refid="joinDetailCondition"/>
+                    <!--<include refid="orderSort"/>-->
+           order by todo_order.order_id  desc  limit #startRow#,#endRow#
+    </select>
+        <!-- 查询没有结算且充值成功的订单 -->
+    <select id="findCostFinishedNoSettlementOrderForMsg" resultMap="todoOrder.todoOrderForMsgResultMap"
+            parameterClass="todoOrderQuery">
+            select t1.order_id,t1.vender_id,t1.finished, t1.created,t1.order_status,t1.origin,t1.cost_price,t2.quantity
+        <![CDATA[
+        from todo_order t1 join todo_order_detail t2 on t1.order_id= t2.order_id where t1.order_status=8 and t1.cost_price >0 and   t1.state=1 and t1.fin_status=0 limit #endRow#
+        ]]>
+    </select>
+    <!-- 查询没有结算且充值成功的订单 -->
+    <select id="findFinishedNoSettlementOrderForMsg" resultMap="todoOrder.todoOrderForMsgResultMap"
+            parameterClass="todoOrderQuery">
+        <![CDATA[
+		select order_id,vender_id,finished from  todo_order where order_status=8 and cost_price =0 and   state=1 and fin_status=0 limit #endRow#
+		 ]]>
+    </select>
+    <!-- 更新订单为已结算 -->
+    <update id="updateOrderFinStatusForSettlementMsg" parameterClass="long">
+        update todo_order set fin_status=1,modified = now() where order_id=#orderId# and order_status=8 and state=1
+        and fin_status=0
+    </update>
+
+    <select id="getOrderDetail" resultMap="todoOrder.OrderAndOrderDetailResultMap" parameterClass="todoOrderQuery">
+        SELECT
+        <include refid="selectAllJoinTable"/>
+        from todo_order t1 join todo_order_detail t2 on t1.order_id= t2.order_id
+        <include refid="joinCondition"/>
+    </select>
+
+    <!-- 通过条件取得订单状态 -->
+    <!--<select id="getOrderstatus" resultClass="int" parameterClass="todoOrderQuery">-->
+        <!--SELECT ORDER_STATUS from todo_order-->
+        <!--<include refid="condition"/>-->
+    <!--</select>-->
+
+      <!-- 查询基本信息 仅限order表 -->
+    <select id="getOrderBaseInfo" resultMap="todoOrder.todoOrderResultMap" parameterClass="long">
+        SELECT
+        <include refid="selectAll"/>
+        from todo_order  where order_id = #orderId#
+    </select>
+</sqlMap>

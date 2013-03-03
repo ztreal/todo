@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+    <bean id="defaultSequence" class="com.jd.common.util.Sequence">
+        <property name="dataSource" ref="popuserDataSource"/>
+    </bean>
+    <bean id="sequenceUtil" class="com.jd.common.util.SequenceUtil">
+        <property name="defaultSequence" ref="defaultSequence"/>
+    </bean>
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:sqlmap-config.xml"/>
+    </bean>
+    <bean id="timeHandler" class="com.jd.common.aop.TimeHandler"/>
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <value>*Dao</value>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>timeHandler</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="todoOrderDao" class="com.easytodo.com.dao.order.impl.todoOrderDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="todotodoDetailDao" class="com.easytodo.com.dao.order.impl.todotodoDetailDAOImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="todoOrderDetailDao" class="com.easytodo.com.dao.order.impl.todoOrderDetailDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="todoSaleStateDao" class="com.easytodo.com.dao.order.impl.todoSaleStateDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="todoGameDistrictDao" class="com.easytodo.com.dao.game.impl.todoGameDistrictDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+
+    <bean id="bussinessProcessDao" class="com.easytodo.com.dao.bussinessprocess.impl.BussinessProcessDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="popCategoryDao" class="com.easytodo.com.dao.order.impl.PopCategoryDaoImpl">
+        <property name="dataSource" ref="popwareDataSource"/>
+    </bean>
+
+    <bean id="localCategoryDao" class="com.easytodo.com.dao.category.impl.LocalCategoryDaoImpl">
+        <property name="dataSource" ref="popdirDataSource"/>
+    </bean>
+
+    <bean id="skuDao" class="com.easytodo.com.dao.sku.impl.SkuDaoImpl">
+        <property name="dataSource" ref="popwareDataSource"/>
+    </bean>
+
+    <bean id="todoRefundDao" class="com.easytodo.com.dao.finance.impl.todoRefundDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+
+    <bean id="indexInfoDao" class="com.easytodo.com.dao.view.impl.IndexInfoDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    	<!-- 操作日志 -->
+	<bean id="operateLogDao" class="com.easytodo.com.dao.operateLog.impl.OperateLogDaoImpl">
+		<property name="dataSource" ref="popuserDataSource"/>
+	</bean>
+    <bean id="priceDao" class="com.easytodo.com.dao.price.impl.PriceDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="wareDao" class="com.easytodo.com.dao.ware.impl.WareDaoImpl">
+        <property name="dataSource" ref="popwareDataSource"/>
+    </bean>
+
+    <bean id="attrDao" class="com.easytodo.com.dao.attr.impl.AttrDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+    <bean id="attrValueDao" class="com.easytodo.com.dao.attr.impl.AttrValueDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+     <bean id="skuAttrDao" class="com.easytodo.com.dao.price.impl.SkuAttrDaoImpl">
+        <property name="dataSource" ref="todomanDataSource"/>
+    </bean>
+</beans>

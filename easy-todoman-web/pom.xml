@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="GB2312"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>easy-todo</artifactId>
+        <groupId>com.easytodo.com</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.easytodo.com</groupId>
+    <artifactId>easy-todoman-web</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>easy-todoman-web</name>
+    <packaging>war</packaging>
+    <url>http://man.todo.zt.com</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-core</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.8.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-spring-plugin</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-json-plugin</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.barcode4j</groupId>
+            <artifactId>barcode4j</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>avalon-framework</groupId>
+            <artifactId>avalon-framework-api</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.easytodo.com</groupId>
+            <artifactId>easy-todo-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
+    </dependencies>
+    <build>
+        <finalName>easy-todoman-web.war</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+    <profiles>
+        <profile>
+            <id>production</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1-beta-1</version>
+                        <configuration>
+                            <archiveClasses>true</archiveClasses>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>development</id>
+            <properties>
+                <!-- 开始 第一部分: 登录相关设置 -->
+
+
+                <!-- 结束 第一部分: 登录相关设置 -->
+
+                <!-- 开始 第二部分: 数据库配置，发布时需运维配置JNDI -->
+                <!--数据库连接的方式-->
+                <todo.jdbc.datasource.type>jndi</todo.jdbc.datasource.type>
+
+                <!-- 结束 第二部分: 数据库配置，发布时需运维配置JNDI -->
+
+                <!-- 开始 第三部分: 服务器配置，发布时需找运维确定 -->
+
+
+                <!-- 结束 第三部分: 服务器配置，发布时需找运维确定 -->
+
+                <!-- 开始 第四部分: 开发设置 -->
+                <!-- 本系统域名 -->
+
+
+                <!-- 结束 第五部分: 依赖的外部接口，发布时需找接口人确定 -->
+
+                <!-- 开始 第六部分: 提供给别人的接口，发布时需通知调用人 -->
+
+
+                <!-- 开始 第七部分: 开发框架配置，发布人修改 -->
+                <!--struts的运行模式。生产环境要改为false-->
+                <todoman.struts.devMode>true</todoman.struts.devMode>
+                <!--velocity的宏是否重新载入。生产环境要改为false-->
+                <todoman.velocity.macro.autoreload>true</todoman.velocity.macro.autoreload>
+                <todoman.velocity.cache>true</todoman.velocity.cache>
+                <todoman.velocity.cache.time>10</todoman.velocity.cache.time>
+                <todoman.vmcommon.path>/vm-common</todoman.vmcommon.path>
+                <!-- 结束 第七部分: 开发框架配置，发布人修改 -->
+                <!-- 部署到生产环境 -->
+                <todoman.cntodo.env.production>true</todoman.cntodo.env.production>
+            </properties>                                                 
+        </profile>
+    </profiles>
+</project>

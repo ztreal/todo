@@ -1,0 +1,187 @@
+#set($title = "首页静态更新")
+<script type="text/javascript" src="$assetModule.getTarget("/pop-ven/201007/js/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="$assetModule.getTarget("/pop-ven/201007/js/jquery.metadata.js")"></script>
+<script type="text/javascript" src="$assetModule.getTarget("/pop-ven/201007/js/jquery.validate.popext.js")"></script>
+<div id="content">
+    <div class="i-con1 table_list">
+        <div class="tb-x1 resultlist">
+            <div class="btns">
+                <font color="red" size="4">
+                #showSimpleError()
+                #showSimpleMessage()
+                </font>
+               <input id="optionType" type="hidden">
+               <form id="pubform" action="indexInfo_createIndexInfo.action" method="post">
+                    <textarea rows="30" cols="130" id="indexInfo.content" name="indexInfo.content" class="{required:true}">$!ViewContent</textarea>
+                   <div class="btn-area-a">
+                    <br>
+                    <input id="viewPubBtn" name="viewPubBtn" type="submit" value="保&nbsp存" class="bhn-r-s"/>
+                    <input id="viewPreView" name="viewPreView"  type="submit" value="预&nbsp;览" class="bhn-r-s"/>
+                   </div>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var validateStr = function(){
+        var str = $("#indexInfo\\.content").val();
+        if(str!=''){
+           var gameStr = str.substring(str.indexOf('\<!--game  start--\>')+'\<!--game  start--\>'.length,str.indexOf('\<!--game  end--\> '));
+           var qqStr = str.substring(str.indexOf('\<!--qq  start--\>')+'\<!--qq  start--\>'.length,str.indexOf('\<!--qq  end--\> '));
+
+           var gameStrArray = gameStr.split("\"");
+           var qqStrArray = qqStr.split("\"");
+
+           gameStr = "";
+           qqStr = "";
+           for(var i=1;i < gameStrArray.length-1;i++){
+               if(jQuery.trim(gameStrArray[i]) == "+"){
+                   continue;
+               }
+               gameStr+=jQuery.trim(gameStrArray[i]);
+           }
+
+           for(var i=1;i < qqStrArray.length-1;i++){
+               if(jQuery.trim(qqStrArray[i]) == "+"){
+                   continue;
+               }
+               qqStr+=jQuery.trim(qqStrArray[i]);
+           }
+
+           if(!checkStr(gameStr)){return false;};
+           if(!checkStr(qqStr)){return false;};
+           return true;
+        }
+    }
+
+    function StObj(stName, stId,stColor) {
+            this.stName = stName;
+            this.stColor = stColor;
+            this.stId = stId;
+            this.StiArray = new Array();
+    }
+
+
+    function StiObj(stiName, stiId) {
+        this.stiName = stiName;
+        this.stiId = stiId;
+        this.StvArray = new Array();
+    }
+
+    function StvObj(stvPrice, stvType,skuId) {
+        this.stvPrice = stvPrice;
+        //1卡密2直冲
+        this.stvType = stvType;
+        this.skuId = skuId;
+    }
+
+
+
+
+
+    function checkStr(gameStr){
+        var checkFlag = true;
+
+        var gameArray = gameStr.split("^^");
+        if (gameArray.length == 0) {
+            checkFlag = false;
+            alert("game is not exist")
+        }
+        var stArray = new Array();
+        for (var i = 0; i < gameArray.length; i++) {
+            //Z-诛仙|red|10元{zc-9.9-1000001}{km-9.8-1000002},20元{zc-18.8-1000003}{km-19.1-1000003}
+            if (gameArray[i].split("|").length != 3) {
+                checkFlag = false;
+                alert("单个游戏字符串中应该有一个\"|\"符号,字符串格式错误" + gameArray[i]);
+                continue;
+            }
+//            var gameParObj = gameArray[i].split("|");
+//            var stObj = new StObj();
+//            //游戏名称
+//            stObj.stName = gameParObj[0];
+//			//颜色
+//			stObj.stColor = gameParObj[1];
+//            if (gameParObj[2].indexOf("{") <= 0) {
+//                checkFlag = false;
+//                alert("面值类型格式错误");
+//            }
+
+//            //先通过","分割所有面值
+//            var parArray = gameParObj[2].split(",");
+//            if (parArray.length == 0) {
+//                checkFlag = false;
+//                alert("这个游戏无面值选择" + gameParObj[2]);
+//                continue;
+//            }
+//            //10元{zc-9.9-1000001}{km-9.8-1000002},20元{zc-9.9-1000001}{km-9.8-1000002}
+//            for (var a = 0; a < parArray.length; a++) {
+//                var stiObj = new StiObj();
+//                var par = parArray[a].substring(0, parArray[a].indexOf("{"));
+//                //alert("par:"+par);
+//                //游戏面值 10元
+//                stiObj.stiName = par;
+//                var parValue = parArray[a].substring(parArray[a].indexOf("{"));
+//                //alert("parvalue:"+parValue);
+//                var reg_stv = /\{.*?\}/gm;
+//                var result = parValue.match(reg_stv);
+//
+//                if (!result) {
+//                    checkFlag = false;
+//                    alert("reg result is null,stv格式错误,parValue:" + parValue);
+//                } else {
+//                    //{zc-9.9-1000001}{km-9.8-1000002}
+//                    for (var v = 0; v < result.length; v++) {
+//                        var stvArray = result[v].substring(1, result[v].length - 1).split("-");
+//                        if (stvArray.length != 3) {
+//                            checkFlag = false;
+//                            alert("stv格式错误,应该是{km-9.8-1000002}这样的格式,当前值为:" + parValue);
+//                            continue;
+//                        }
+//                        //1卡密 2直冲
+//                        var rtIv = stvArray[0]=="km"?1:2;
+//                        var stvObj = new StvObj(stvArray[1],rtIv, stvArray[2]);
+//                        //stv 放入 sti
+//                        stiObj.StvArray[v] = stvObj;
+//                        //alert(stvObj);
+//
+                    }
+//                    //alert(stiObj.StvArray.length);
+//                }
+//                //sti 放入 st
+//                stObj.StiArray[a]=stiObj;
+//            }
+//        }
+        return checkFlag;
+    }
+
+
+
+    jQuery(document).ready(function() {
+        $("#viewPubBtn").click(function(){
+            if(!validateStr()){return false;}
+            $("#optionType").val("1");
+        });
+
+        $("#viewPreView").click(function(){
+            if(!validateStr()){return false;}
+            $("#optionType").val("2");
+        });
+
+    });
+
+
+    jQuery("#pubform").validate({
+        submitHandler: function(form) {
+           if(jQuery("#optionType").val()=="2"){
+                form.action="indexInfo_previewIndexInfo.action";
+                form.target="_bank";
+           }else{
+                form.action="indexInfo_createIndexInfo.action";
+                form.target="_self";
+           }
+
+           form.submit();
+        }
+    });
+</script>

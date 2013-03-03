@@ -1,0 +1,32 @@
+#* @vtlvariable name="exception" type="java.lang.Exception" *#
+#* @vtlvariable name="result" type="com.jd.common.web.result.Result" *#
+<link rel="stylesheet" type="text/css" href="$assetModule.getTarget("/todo/skin/todo.purchase.css")" />
+<div class="w box" id="mp">
+
+    <div class="mc">
+        <div style="border:1px solid #ffccaa;background:#fffcf1;width:715px;margin-top:10px;padding:40px 40px 20px">
+            <div style="overflow:hidden;zoom:1;padding:0 0 18px 77px;width:553px;margin:0 auto ;"><b></b>
+              <ul>
+                #if($exception)
+                    $!exception.printStackTrace()
+                    #if($!exception.class.simpleName=="NoSuchMethodException")
+                        $!response.setStatus(404)
+                        <li>��Ǹ���������ҳ�������޷��򿪣� </li>
+                    #elseif($!exception.message)
+                        <li> �����ˣ�  $!exception.message </li>
+                    #else
+                        <li> ������ϵͳ���� </li>
+                    #end
+                #else
+                    #showSimpleError()&nbsp
+                #end
+                  </ul>
+                <div style="padding:10px 0 10px 60px;width:490px;margin:0 auto;line-height:20px;">
+                    <a href="javascript:history.go(-1) ">����&gt;&gt;</a>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

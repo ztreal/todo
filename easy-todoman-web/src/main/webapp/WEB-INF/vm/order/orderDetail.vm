@@ -1,0 +1,240 @@
+#* @vtlvariable name="enumUtils" type="com.easytodo.com.web.util.EnumUtils" *#
+<link rel="stylesheet" type="text/css" href="http://misc.todoimg.com/jd2008/201010/skin/user.game.css" />
+<DIV class=w>
+    <div id="posi">
+        <div>��ǰ��λ�ã�<a href="#">man��̨����</a>&nbsp;&gt;&nbsp;<a href="#">��������</a></div>
+    </div>
+    #if($OrderDetailVo)
+        <DIV id=orderstate class=m>
+            <DIV class=mt>
+                <DIV class=fl>�����ţ�$!OrderDetailVo.orderId&nbsp;&nbsp;&nbsp;&nbsp;</DIV>
+                <DIV class=fl>״̬��<SPAN class=ftx14>$!enumUtils.getOrderStatueEm($!OrderDetailVo.orderStatus)</SPAN></DIV>
+            </DIV>
+        </DIV>
+    <DIV id=orderinfo class=m>
+        <DIV class=mt><STRONG>������Ϣ</STRONG></DIV>
+    <DIV class=mc>
+        ##ֱ������
+        #if($OrderDetailVo.type== 2)
+        #if($OrderDetailVo.gameOrQq==1)
+        ##��Ϸ
+            <DL class=fore>
+                <DT>��ֵ/������ȡ���</DT>
+                <DD class=p-list>
+                    <TABLE cellSpacing=0 cellPadding=0 width="100%">
+                        <TBODY>
+                        <TR>
+                            <TH width=80>����</TH>
+                            <TH width=250>��Ϸ�˺�</TH>
+##                             #if($OrderDetailVo.districtCn)
+                            <TH width=250>�������</TH>
+##                             #end
+##                            #if($OrderDetailVo.bn)
+                            <TH>����</TH>
+##                            #end
+                        </TR>
+                        <TR>
+                            <TD vAlign=top>$!OrderDetailVo.quantity</TD>
+                            <TD>
+                                #if($!OrderDetailVo.account)
+                                    $!stringEscapeUtils.escapeHtml($!OrderDetailVo.account)
+                                   #else
+                                -
+                                #end
+                            </TD>
+                            <TD>
+                             #if($OrderDetailVo.districtCn)
+                                 $!stringEscapeUtils.escapeHtml($!OrderDetailVo.districtCn)
+                             #else
+                               -
+                            </TD>
+                            #end
+                            <TD>
+                            #if($OrderDetailVo.bn)
+                               ս��ͨ��֤�� $!stringEscapeUtils.escapeHtml($!OrderDetailVo.bn)
+                            #else
+                            -
+                             </TD>
+                            #end
+                        </TR>
+                        </TBODY>
+                    </TABLE>
+                </DD>
+            </DL>
+            <DL>
+                <DT>�ջ�����Ϣ</DT>
+                <DD>
+                    <UL>
+                        <LI>�ֻ���룺$!OrderDetailVo.mobile</LI>
+                        <LI>��Ϸ�˺ţ�
+                            #if($!OrderDetailVo.account)
+                                $!stringEscapeUtils.escapeHtml($!OrderDetailVo.account)
+                                   #else
+                                -
+                                #end</LI>
+                       <LI>���������
+                        #if($OrderDetailVo.districtCn)
+                            $!stringEscapeUtils.escapeHtml($!OrderDetailVo.districtCn)
+                        #else
+                            -
+                        #end
+                       </LI>
+                        <LI> ����:
+                            #if($OrderDetailVo.bn)
+                                ս��ͨ��֤��$!stringEscapeUtils.escapeHtml($!OrderDetailVo.bn)
+                            #else
+                                -
+                            #end
+                        </LI>
+                    </UL>
+                </DD>
+            </DL>
+        <DL>
+        #else
+        ##QQ
+            <DL class=fore>
+                <DT>��ֵ/������ȡ���</DT>
+                <DD class=p-list>
+                    <TABLE cellSpacing=0 cellPadding=0 width="100%">
+                        <TBODY>
+                        <TR>
+                            <TH width=80>����</TH>
+                            <TH width=250>�˺�</TH>
+                            <TH width=250>�������</TH>
+                            <TH>����</TH>
+                        </TR>
+                        <TR>
+                            <TD vAlign=top>$!OrderDetailVo.quantity</TD>
+                            <TD>
+                                 #if($!OrderDetailVo.account)
+                                     $!stringEscapeUtils.escapeHtml($!OrderDetailVo.account)
+                                   #else
+                                -
+                                #end
+                            </TD>
+                             <TD>
+                                 -
+                            </TD>
+                             <TD>
+                                 -
+                            </TD>
+                        </TR>
+                        </TBODY>
+                    </TABLE>
+                </DD>
+            </DL>
+            <DL>
+                <DT>�ջ�����Ϣ</DT>
+                <DD>
+                    <UL>
+                        <LI>�ֻ���룺$!stringEscapeUtils.escapeHtml($!OrderDetailVo.mobile)</LI>
+                        <LI>�˺ţ�$!stringEscapeUtils.escapeHtml($!OrderDetailVo.account)</LI>
+                    </UL>
+                </DD>
+            </DL>
+        <DL>
+        #end
+    ##���ܵ����
+      #elseif($OrderDetailVo.type== 1)
+        <DL class=fore>
+            <DT>��ֵ/������ȡ���</DT>
+            <DD class=p-list>
+                <TABLE cellSpacing=0 cellPadding=0 width="100%">
+                    <TBODY>
+                    <TR>
+                        <TH width=80>���</TH>
+                        <TH width=250>����</TH>
+##                        #if($!OrderDetailVo.orderStatus==8||$!OrderDetailVo.orderStatus==16392)
+                            <TH width=250>����</TH>
+##                        #end
+                        <TH>��Ч����</TH>
+                    </TR>
+                    ##�����б�
+                    #if($!OrderDetailVo.todoList && $OrderDetailVo.todoList.size()>0)
+                        #set ($i=1)
+                        #foreach($todo in $OrderDetailVo.todoList)
+                        <tr>
+                            <td>$i</td>
+                            <td>$!todo.todoNo</td>
+                            <td>-</td>
+                            <td>$!todo.expiretime</td>
+                        </tr>
+                            #set($i=$i+1)
+                        #end
+                    #end
+                    </TBODY>
+                </TABLE>
+            </DD>
+            #if($!OrderDetailVo.firstPickup)
+                <dd>
+                    <ul>
+                        <li style="color:#d2d2d2">
+                            ������ȡʱ��:$!dateFormatUtils.format($!OrderDetailVo.firstPickup,"yyyy-MM-dd HH:mm:ss")
+                        </li>
+                    </ul>
+                </dd>
+            #end
+        </DL>
+        <DL>
+            <DT>�ջ�����Ϣ</DT>
+            <DD>
+                <UL>
+                    <LI>�ֻ���룺$!OrderDetailVo.mobile</LI>
+                </UL>
+            </DD>
+        </DL>
+    <DL>
+    #else  û�ҵ���ؼ�¼��
+    #end
+
+##����ֱ�干�ò���
+
+    <DT>֧����ʽ</DT>
+    <DD>
+        <UL>
+            <LI>֧����ʽ������֧��</LI>
+        </UL>
+    </DD>
+</DL>
+    <DL>
+        <DT>��Ʒ�嵥</DT>
+        <DD class=p-list>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%">
+                <TBODY>
+                <TR>
+                    <TH width="10%">��Ʒ���</TH>
+                    <TH width="50%">��Ʒ���</TH>
+                    <TH width="10%">������</TH>
+                    <TH width="8%">����</TH>
+                    <TH width="7%">���ͻ��</TH>
+                    <TH width="7%">��Ʒ����</TH>
+                </TR>
+                <TR>
+                    <TD vAlign=top>$!OrderDetailVo.skuId</TD>
+                    <TD>
+                       <DIV  > <a  href="http://www.todo.com/product/$!{OrderDetailVo.skuId}.html" target="_BLANK">$!stringEscapeUtils.escapeHtml($!OrderDetailVo.skuName)</a></DIV>
+                    </TD>
+                    <TD><SPAN class=ftx04>$!OrderDetailVo.origin</SPAN></TD>
+                    <TD><SPAN class=ftx04>��0</SPAN></TD>
+                    <TD>0</TD>
+                    <TD>$!OrderDetailVo.quantity</TD>
+                </TR>
+                </TBODY>
+            </TABLE>
+        </DD>
+    </DL>
+</DIV>
+    <DIV class=total>
+        <UL>
+            <LI><SPAN>��Ʒ�ܽ�</SPAN>��$!OrderDetailVo.origin</LI>
+            <LI><SPAN>�˷ѣ�</SPAN>��0.00</LI>
+            <LI><SPAN>-�Żݣ�</SPAN>��$!OrderDetailVo.youhui</LI>
+            <LI><SPAN>-��</SPAN>��$!OrderDetailVo.credit </LI>
+        </UL>
+        <SPAN class=clr> </SPAN>
+
+        <DIV class=extra>����֧����<SPAN class=ftx04>��<B>$!OrderDetailVo.payed</B></SPAN>
+        </DIV>
+    </DIV>
+</DIV>
+#end</DIV>
