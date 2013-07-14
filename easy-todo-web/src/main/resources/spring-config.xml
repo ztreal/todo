@@ -1,7 +1,14 @@
-<?xml version="1.0" encoding="GBK"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName">
-    <!-- �����ļ����� -->
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+<!-- 属性文件读入 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -11,7 +18,67 @@
 	</bean>
     <import resource="spring-config-mongo.xml"/>
 	<import resource="spring-config-dao.xml" />
-	<import resource="spring-config-manager.xml" />
 	<import resource="spring-config-service.xml" />
-    <import resource="spring-config-struts.xml"/>
+
+    <!--定义异常处理页面-->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.sql.SQLException">outException</prop>
+                <prop key="java.io.IOException">outException</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 属性文件读入 -->
+       <context:property-placeholder location="classpath:todo-production.properties"/>
+       <!--<import resource="spring-config-datasource-mongodb.xml" />-->
+
+       <!--<import resource="spring-config-datasource-${solr.jdbc.datasource.type}.xml"/>-->
+
+
+       <context:component-scan base-package="com.easy.todo"/>
+
+
+       <!-- 解决字符串乱码 -->
+       <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+           <property name="messageConverters">
+               <list>
+                   <bean
+                           class="org.springframework.http.converter.StringHttpMessageConverter">
+                       <property name="supportedMediaTypes">
+                           <list>
+                               <value>text/html;charset=UTF-8</value>
+                           </list>
+                       </property>
+                   </bean>
+               </list>
+           </property>
+       </bean>
+
+
+       <bean id="velocityConfig"
+             class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+           <property name="resourceLoaderPath" value="/WEB-INF/vm/"/>
+           <property name="configLocation" value="classpath:velocity.properties"/>
+       </bean>
+
+
+       <bean id="viewResolver"
+             class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+           <property name="cache" value="false"/>
+           <property name="prefix" value=""/>
+           <property name="suffix" value=".vm"/>
+           <!--<property name="toolboxConfigLocation" value="WEB-INF/classes/toolbox.xml"/>-->
+           <property name="toolboxConfigLocation" value="toolbox.xml"/>
+           <property name="contentType" value="text/html;charset=utf-8"/>
+           <property name="exposeSpringMacroHelpers" value="true"/>
+           <property name="viewClass" value="com.easy.todo.util.spring.VelocityToolsView"/>
+           <!--<property name="attributesMap">-->
+           <!--<map>-->
+           <!--&lt;!&ndash;Velocity Escape Tool&ndash;&gt;-->
+           <!--<entry key="esc"><bean class="org.apache.velocity.tools.generic.EscapeTool"/></entry>-->
+           <!--</map>-->
+           <!--</property>-->
+       </bean>
 </beans>

@@ -6,7 +6,7 @@
           http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd 
           http://www.springframework.org/schema/beans 
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">      
-<mongo:db-factory id="mongoDbFactory" username="todo" password="zt3966410" host="58.215.190.107" port="37117"  dbname="todo" />
+<mongo:db-factory id="mongoDbFactory" username="todo" password="zt3966410" host="42.121.52.175" port="27017"  dbname="todo" />
     <bean id="mongoOps" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="mongoDbFactory"/>
     </bean>

@@ -11,7 +11,7 @@
        default-autowire="byName">
 
 
-    <!-- todo order query service bean -->
+    <!-- Todo order query service bean -->
     <bean id="orderInfoService" class="com.easytodo.com.service.order.impl.OrderInfoServiceImpl"/>
 
 

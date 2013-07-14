@@ -1,6 +1,7 @@
 package com.easy.todo.service;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * User: zhangtan
@@ -9,5 +10,5 @@ import org.apache.log4j.Logger;
  */
 public class BaseService {
 
-    protected Logger log = Logger.getLogger(this.getClass());
+    protected transient Log log = LogFactory.getLog(getClass());
 }

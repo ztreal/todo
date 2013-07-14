@@ -1,6 +1,7 @@
 package com.easy.todo.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
  */
 public class BaseDao {
     protected MongoTemplate mongoOps;
-    protected Logger log = Logger.getLogger(this.getClass());
+    protected transient Log log = LogFactory.getLog(getClass());
 
     public MongoTemplate getMongoOps() {
         return mongoOps;

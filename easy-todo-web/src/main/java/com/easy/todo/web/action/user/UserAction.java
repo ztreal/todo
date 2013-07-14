@@ -2,61 +2,36 @@ package com.easy.todo.web.action.user;
 
 import com.easy.todo.domain.user.User;
 import com.easy.todo.service.UserService;
-import com.easy.todo.web.action.base.BaseAction;
-import org.apache.commons.lang.xwork.StringUtils;
+import com.easy.todo.util.spring.BaseAction;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * User: zhangtan
  * Date: 12-9-7
  * Time: 下午4:47
  */
+@Controller
 public class UserAction extends BaseAction {
-    private String email;
-    private String pwd;
-    private UserService  userService;
-    private String SQ_ID;
 
-    public String register(){
+    @Resource
+    private UserService userService;
 
-       if(StringUtils.isBlank(pwd)||StringUtils.isBlank(email)){
-           return ERROR;
-       }
+
+    @RequestMapping(value = "/register", method = {RequestMethod.GET,
+            RequestMethod.POST})
+    @ResponseBody
+    public String register(@RequestParam("email") String email, @RequestParam("password") String pwd) {
         User user = new User();
         user.setEmail(email);
         user.setPwd(pwd);
-        userService.insertUser(user,SQ_ID);
-       return "toIndex";
+        userService.insertUser(user);
+        return "toIndex";
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public String getSQ_ID() {
-        return SQ_ID;
-    }
-
-    public void setSQ_ID(String SQ_ID) {
-        this.SQ_ID = SQ_ID;
-    }
 }

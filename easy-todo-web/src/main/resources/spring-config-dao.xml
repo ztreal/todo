@@ -1,8 +1,66 @@
-<?xml version="1.0" encoding="GBK"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
-       default-autowire="byName">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-    <bean id="userDao" class="com.easy.todo.dao.impl.UserDaoImpl"/>
+    <!-- 数据源 -->
+        <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+            <!--<property name="username" value="${integral.datasource.jdbc.user}" />-->
+            <!--<property name="password" value="${integral.datasource.jdbc.password}" />-->
+            <!--<property name="driverClassName" value="${integral.datasource.jdbc.driverclass}" />-->
+            <!--<property name="url" value="${integral.datasource.jdbc.jdbcurl}" />-->
+
+            <!--&lt;!&ndash;初始化连接数&ndash;&gt;-->
+            <!--<property name="initialSize" value="${integral.datasource.initialpoolsize}"/>-->
+            <!--&lt;!&ndash;连接池最小空闲&ndash;&gt;-->
+            <!--<property name="minIdle" value="${integral.datasource.minpoolsize}"/>-->
+            <!--&lt;!&ndash;连接池最大空闲&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="maxIdle" value="${minpoolsize}"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;连接池最大使用连接数量。Default: 15 &ndash;&gt;-->
+            <!--<property name="maxActive" value="${integral.datasource.maxpoolsize}"/>-->
+            <!--&lt;!&ndash;最小逐出时间。最大空闲时间,指定时间内未使用则连接被丢弃。若为0则永不丢弃 Default: 0 &ndash;&gt;-->
+            <!--<property name="minEvictableIdleTimeMillis" value="${integral.datasource.maxidletime}"/>-->
+            <!--&lt;!&ndash;指定时间检查所有连接池中的空闲连接 Default: 0 &ndash;&gt;-->
+            <!--<property name="timeBetweenEvictionRunsMillis" value="${integral.datasource.idleconnectiontestperiod}"/>-->
+
+            <!--<property name="validationQuery" value="SELECT * from dual" />-->
+            <!--&lt;!&ndash; 测试超时时间 &ndash;&gt;-->
+            <!--<property name="validationQueryTimeout" value="500" />-->
+            <!--&lt;!&ndash; 连接失败尝试次数 &ndash;&gt;-->
+            <!--<property name="ConnectionErrorRetryAttempts" value="2" />-->
+
+            <!--&lt;!&ndash;-->
+            <!--<property name="testWhileIdle" value="true" />-->
+            <!--&ndash;&gt;-->
+            <!--<property name="testOnBorrow" value="false" />-->
+            <!--<property name="testOnReturn" value="false" />-->
+            <!--<property name="filters" value="stat,log4j" />-->
+            <!--&lt;!&ndash;-->
+            <!--<property name="QueryTimeout" value="1000" />-->
+            <!--&ndash;&gt;-->
+            <!--<property name="proxyFilters">-->
+                <!--<list><ref bean="stat-filter"/> </list>-->
+            <!--</property>-->
+        <!--</bean>-->
+        <!--<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">-->
+            <!--<property name="slowSqlMillis" value="${slowsql.time}" />-->
+            <!--<property name="logSlowSql" value="true" />-->
+        <!--</bean>-->
+
+        <!-- 不能连接数据库时使用下面数据库连接配置会自动建立hsqldb -->
+        <!--<jdbc:embedded-database id="dataSource">-->
+            <!--<jdbc:script location="classpath:database/Todo-hsqldb-schema.sql"/>-->
+            <!--<jdbc:script location="classpath:database/Todo-hsqldb-dataload.sql"/>-->
+        <!--</jdbc:embedded-database>-->
+
+
+    <!--<bean id="userDao" class="com.easy.todo.dao.impl.UserDaoImpl"/>-->
 
 </beans>

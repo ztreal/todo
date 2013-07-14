@@ -1,0 +1,158 @@
+#set($layout = "/layout/default.vm") ##选择布局页面
+#set($page_title ="我的任务列表")
+#set($name = "myTodoList")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>简单任务列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="个人的任务列表">
+    <meta name="author" content="张坦">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        任务列表
+                    </li>
+                    <li class="active">
+                        <a href="#">工作</a>
+                    </li>
+                    <li>
+                        <a href="#">家庭</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+        <div class="span6">
+            <div class="hero-unit">
+                <div id="addContent">
+                    <input type="text" style="width:300px" id="todoContent">
+                    <a class="btn" style="float:right" id="add">添加</a>
+
+                    <div class="alert alert-success" id="rs" style="display: none">
+
+                    </div>
+                </div>
+
+                <div id="todoListContent">
+                    #if($todo)
+                        <table class="table table-striped">
+                            <thead>
+                            <th>内容</th>
+                            </thead>
+                            #foreach($todo in $todoListDto.userList)
+                                <tr>
+                                    <td>$!todo.content</td>
+                                </tr>
+                            #end
+                        </table>
+                    #end
+
+                </div>
+
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    <footer>
+        <p>
+            &copy; zt集团 2013
+        </p>
+    </footer>
+
+</div>
+<!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+</body>
+
+<script>
+    jQuery(function ($) {
+        $("#add").click(function () {
+            var btn = $("#add");
+            btn.button('loading');
+            var todoContent = $("#todoContent").val();
+            var rsContent = $("#rs");
+            $.ajax({
+                async: false,
+                cache: false,
+                url: "addTodo?content=" + todoContent,
+                type: 'get',
+                dataType: 'json',
+                success: function () {
+//                    if (data != null && data.userList != null) {
+                    rsContent.css("display", "block");
+                    rsContent.addClass("alert alert-success");
+                    rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>添加成功!\</strong> ');
+//                    } else {
+//                        rsContent.addClass("alert alert-error");
+//                        rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>添加失败!\</strong> ');
+//                    }
+                },
+                error: function () {
+                    rsContent.css("display", "block");
+                    rsContent.addClass("alert alert-error");
+                    rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>添加失败!\</strong> ');
+                }
+            });
+            btn.button('reset');//将按钮状态初始化到最初
+        });
+
+
+    })
+</script>
+</html>

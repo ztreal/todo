@@ -9,5 +9,5 @@ import com.easy.todo.domain.user.User;
  */
 public interface UserService {
 
-    public void insertUser(User user,String SQ_ID);
+    public void insertUser(User user);
 }

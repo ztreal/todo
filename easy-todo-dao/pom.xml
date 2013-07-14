@@ -18,11 +18,6 @@
 			<artifactId>easy-todo-domain</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-        <dependency>
-			<groupId>com.easytodo.com</groupId>
-			<artifactId>easy-todo-rpc</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>

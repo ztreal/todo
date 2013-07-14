@@ -4,17 +4,7 @@
        default-autowire="byName">
 
 
-    <bean id="userService" class="com.easy.todo.service.impl.UserServiceImpl"/>
+    <!--<bean id="userService" class="com.easy.todo.service.impl.UserServiceImpl"/>-->
 
-    <bean id="logAop" class="com.easy.todo.util.LogAop"/>
-    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-        <property name="beanNames">
-            <value>*Dao,*Service,*Manager</value>
-        </property>
-        <property name="interceptorNames">
-            <list>
-                <value>logAop</value>
-            </list>
-        </property>
-    </bean>
+
 </beans>
