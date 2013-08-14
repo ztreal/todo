@@ -26,11 +26,13 @@ public class TodoAction extends BaseAction {
     @RequestMapping(value = "/addTodo", method = {RequestMethod.GET,
             RequestMethod.POST})
     @ResponseBody
-    public String register(@RequestParam("content") String content) {
+    public String addTodo(@RequestParam("content") String content) {
         Todo todo = new Todo() ;
         todo.setContent(content);
         todoService.addTodo(todo);
         return "toIndex";
     }
+
+
 
 }

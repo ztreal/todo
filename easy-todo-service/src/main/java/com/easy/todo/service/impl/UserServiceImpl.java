@@ -24,5 +24,8 @@ public class UserServiceImpl  extends BaseService implements UserService{
         log.info("add user sucess!");
     }
 
-
+    public void login(User user) {
+        userDao.insertUser(user);
+        log.info("add user sucess!");
+    }
 }

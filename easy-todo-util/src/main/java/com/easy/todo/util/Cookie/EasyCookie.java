@@ -1,6 +1,7 @@
 package com.easy.todo.util.Cookie;
 
 import com.easy.todo.util.Cookie.encryption.DesEncrypter;
+import com.easy.todo.util.Cookie.encryption.PBECoder;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -13,7 +14,6 @@ import javax.servlet.http.Cookie;
  */
 public class EasyCookie {
 
-    private DesEncrypter desEncrypter;
 
     /**
      * cookie的名字
@@ -32,18 +32,20 @@ public class EasyCookie {
      * 单位：秒
      */
     private int expiry;
-    /**
-     * cookie的key
-     *
-     * @see #encrypt
-     */
-    private String key;
+
     /**
      * 是否加密cookie
      *
      * @see #key
      **/
     private boolean encrypt;
+
+    /**
+     * cookie的key
+     *
+     */
+    private String key = "f**(_f`1323y@^6t6fge@";
+
 
     public String getName() {
         return name;
@@ -93,11 +95,24 @@ public class EasyCookie {
         this.encrypt = encrypt;
     }
 
+    public EasyCookie() {
+    }
+
+    public EasyCookie(String name, String domain, int expiry, String key) {
+        this.name = name;
+        this.domain = domain;
+        this.expiry = expiry;
+        this.key = key;
+    }
 
     public Cookie newCookie(String value) {
-        String newValue;
+        String newValue = "";
         if (!StringUtils.isEmpty(value)) {
-            newValue = isEncrypt() ? desEncrypter.encrypt(value) : value;
+            try {
+                newValue = isEncrypt() ? PBECoder.encrypt(value,key) : value;
+            } catch (Exception e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
         } else {
             newValue = value;
         }
@@ -116,7 +131,7 @@ public class EasyCookie {
 
     public String getValue(String value) {
         if (!StringUtils.isEmpty(value)) {
-            return isEncrypt() ? desEncrypter.decrypt(value) : value;
+            return isEncrypt() ? DesEncrypter.decrypt(value) : value;
         } else {
             return value;
         }

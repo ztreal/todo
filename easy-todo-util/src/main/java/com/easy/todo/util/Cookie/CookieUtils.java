@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class CookieUtils {
      *
      * @param servletResponse
      * @param name
-     **/
+     */
     public final void deleteCookie(HttpServletResponse servletResponse, String name) {
         Cookie cookie;
         if (cookieMap != null && cookieMap.containsKey(name)) {
@@ -69,7 +70,7 @@ public class CookieUtils {
      * @param servletResponse
      * @param name
      * @param value
-     **/
+     */
     public void setCookie(HttpServletResponse servletResponse, String name, String value) {
         if (cookieMap != null && cookieMap.containsKey(name)) {
             EasyCookie EasyCookie = cookieMap.get(name);
@@ -114,6 +115,29 @@ public class CookieUtils {
                 }
             }
         }
+    }
+
+
+    /**
+     * 添加cookie定义值
+     *
+     * @param
+     */
+    public void addEasyCookie(HttpServletResponse servletResponse,String domain, String name, int expiry ,String value) {
+
+        EasyCookie easyCookie = new EasyCookie();
+        easyCookie.setDomain(domain);
+        easyCookie.setName(name);
+        easyCookie.setExpiry(expiry);
+        easyCookie.setPath("/");
+        easyCookie.setEncrypt(true);
+        Cookie cookie = easyCookie.newCookie(value);
+        servletResponse.addCookie(cookie);
+
+        List<EasyCookie> EasyCookieList = new ArrayList<EasyCookie>();
+        EasyCookieList.add(easyCookie);
+        setEasyCookie(EasyCookieList);
+
     }
 
 }

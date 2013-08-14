@@ -34,4 +34,15 @@ public class UserAction extends BaseAction {
         return "toIndex";
     }
 
+    @RequestMapping(value = "/login", method = {RequestMethod.GET,
+            RequestMethod.POST})
+    @ResponseBody
+    public String login(@RequestParam("email") String email, @RequestParam("password") String pwd) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPwd(pwd);
+        userService.insertUser(user);
+        return "toIndex";
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.zt.example.util.Cookie;
+package com.easy.todo.util.Cookie;
 
 
 import java.io.BufferedReader;
@@ -14,11 +14,10 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created with IntelliJ IDEA.
+ * 获取机器配置信息.
  * User: zhangtan
  * Date: 12-11-21
  * Time: 下午2:56
- * To change this template use File | Settings | File Templates.
  */
 public class ServerInfo {
 

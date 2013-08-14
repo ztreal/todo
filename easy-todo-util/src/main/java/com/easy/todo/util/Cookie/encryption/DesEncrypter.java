@@ -13,8 +13,8 @@ import java.security.spec.KeySpec;
  * Time: 下午10:24
  */
 public class DesEncrypter {
-    Cipher ecipher;
-    Cipher dcipher;
+    private static Cipher ecipher;
+    private static Cipher dcipher;
 
     // 8-byte Salt
     byte[] salt = {
@@ -48,7 +48,7 @@ public class DesEncrypter {
         }
     }
 
-    public String encrypt(String str) {
+    public static String encrypt(String str) {
         try {
             // Encode the string into bytes using utf-8
             byte[] utf8 = str.getBytes("UTF8");
@@ -66,7 +66,7 @@ public class DesEncrypter {
         return null;
     }
 
-    public String decrypt(String str) {
+    public static String decrypt(String str) {
         try {
             // Decode base64 to get bytes
             byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
@@ -92,9 +92,11 @@ public class DesEncrypter {
 
             // Encrypt
             String encrypted = encrypter.encrypt("Don't tell anybody!");
-
+            System.out.println(encrypted);
             // Decrypt
             String decrypted = encrypter.decrypt(encrypted);
+
+            System.out.println(decrypted);
         } catch (Exception e) {
         }
     }
