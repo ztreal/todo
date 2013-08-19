@@ -14,11 +14,7 @@
     <name>easy-todo-domain</name>
     <url>http://todo.zt.com</url>
     <dependencies>
-        <dependency>
-            <groupId>com.easytodo.com</groupId>
-            <artifactId>easy-todo-3rd-gw</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
     <build>
         <finalName>easy-todo-domain-${project.version}</finalName>

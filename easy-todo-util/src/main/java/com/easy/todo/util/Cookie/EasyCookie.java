@@ -1,7 +1,7 @@
-package com.easy.todo.util.Cookie;
+package com.easy.todo.util.cookie;
 
-import com.easy.todo.util.Cookie.encryption.DesEncrypter;
-import com.easy.todo.util.Cookie.encryption.PBECoder;
+import com.easy.todo.util.cookie.encryption.DesEncrypter;
+import com.easy.todo.util.cookie.encryption.PBECoder;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.Cookie;

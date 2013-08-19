@@ -14,4 +14,11 @@ public interface UserDao {
      * @param user  用户vo
      */
     public void insertUser(User user);
+
+    /**
+     * 根据邮箱查询一个用户
+     * @param email
+     * @return
+     */
+    public User selectUserByEmail(String email);
 }

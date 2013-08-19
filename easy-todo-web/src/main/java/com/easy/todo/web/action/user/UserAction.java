@@ -25,8 +25,7 @@ public class UserAction extends BaseAction {
 
     @RequestMapping(value = "/register", method = {RequestMethod.GET,
             RequestMethod.POST})
-    @ResponseBody
-    public String register(@RequestParam("email") String email, @RequestParam("password") String pwd) {
+    public String register(@RequestParam("email") String email, @RequestParam("pwd") String pwd) {
         User user = new User();
         user.setEmail(email);
         user.setPwd(pwd);

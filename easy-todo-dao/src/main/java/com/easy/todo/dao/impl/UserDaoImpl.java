@@ -4,6 +4,8 @@ import com.easy.todo.dao.BaseDao;
 import com.easy.todo.dao.UserDao;
 import com.easy.todo.domain.user.User;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,5 +24,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         mongoOps.insert(user);
     }
 
-
+    public User selectUserByEmail(String email){
+        return   mongoOps.findOne(new Query(Criteria.where("email").is(email)), User.class);
+    }
 }

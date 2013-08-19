@@ -21,11 +21,14 @@ public class UserServiceImpl  extends BaseService implements UserService{
 
     public void insertUser(User user) {
         userDao.insertUser(user);
-        log.info("add user sucess!");
+        log.info("add user sucess! email = "+user.getEmail());
     }
 
-    public void login(User user) {
-        userDao.insertUser(user);
-        log.info("add user sucess!");
+    public void login(User user) throws Exception {
+         User userRs =  userDao.selectUserByEmail(user.getEmail());
+        if(userRs==null || !userRs.getPwd().equals(user.getPwd())) {
+            throw new Exception("用户密码不对");
+        }
+        log.info("user login sucess! email = "+user.getEmail());
     }
 }

@@ -1,4 +1,4 @@
-package com.easy.todo.util.Cookie;
+package com.easy.todo.util.other;
 
 import com.easy.todo.domain.BaseConstant;
 import com.easy.todo.domain.param.InParam;

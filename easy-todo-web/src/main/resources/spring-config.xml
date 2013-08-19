@@ -81,4 +81,22 @@
            <!--</map>-->
            <!--</property>-->
        </bean>
+
+
+
+    <!--<bean id="springSessionInterceptor" class="com.easy.todo.web.interceptor.LoginInterceptor" >-->
+         <!--</bean>-->
+    <!--<bean id="autoPorxyFactoryBean1"-->
+            <!--class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">-->
+            <!--<property name="interceptorNames">-->
+                <!--<list>-->
+                    <!--<value>loginInterceptor</value>-->
+                <!--</list>-->
+            <!--</property>-->
+            <!--<property name="beanNames" >-->
+            <!--<list>-->
+                <!--<value>*Action</value>-->
+                <!--</list>-->
+            <!--</property>-->
+        <!--</bean>-->
 </beans>

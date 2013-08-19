@@ -1,4 +1,4 @@
-package com.easy.todo.util.Cookie.encryption;
+package com.easy.todo.util.cookie.encryption;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

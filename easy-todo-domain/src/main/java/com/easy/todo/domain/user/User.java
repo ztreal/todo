@@ -1,5 +1,7 @@
 package com.easy.todo.domain.user;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * User: zhangtan
  * Date: 12-9-4
@@ -7,6 +9,7 @@ package com.easy.todo.domain.user;
  */
 public class User{
 
+    @Id
     public String userId; //用户id
     public String email;//用户邮箱
     public Integer sex;//用户性别
@@ -61,5 +64,9 @@ public class User{
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public String toString(){
+        return "userId="+userId+" pwd = " + pwd +  " email=" + email;
     }
 }

@@ -63,10 +63,10 @@
 
     <div class="container">
 
-      <form class="form-signin"  target="register">
+      <form id="register" class="form-signin"  action="register" method="post">
         <h2 class="form-signin-heading">注册</h2>
-        <input type="text" id="email" class="input-block-level" placeholder="邮箱地址">
-        <input type="password" id="pwd" class="input-block-level" placeholder="密码">
+        <input type="text" id="email" name="email" class="input-block-level" placeholder="邮箱地址">
+        <input type="password" id="pwd" name="pwd" class="input-block-level" placeholder="密码">
         <button class="btn btn-large btn-primary" type="submit">注册</button>
       </form>
 

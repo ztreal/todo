@@ -1,4 +1,4 @@
-package com.easy.todo.util.Cookie;
+package com.easy.todo.util.cookie;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;

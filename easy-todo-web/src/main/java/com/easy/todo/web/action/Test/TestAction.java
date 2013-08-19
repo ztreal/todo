@@ -1,6 +1,6 @@
 package com.easy.todo.web.action.Test;
 
-import com.easy.todo.util.Cookie.CookieUtils;
+import com.easy.todo.util.cookie.CookieUtils;
 import com.easy.todo.util.spring.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

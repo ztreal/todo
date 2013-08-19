@@ -9,6 +9,12 @@ import java.util.Date;
  * Time: 下午10:37
  */
 public class Context {
+
+    /**
+     * 用户id
+     */
+    public String userId;
+
     public String id;
     /**
      * 上级分类的id
@@ -63,5 +69,13 @@ public class Context {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getUsrId() {
+        return userId;
+    }
+
+    public void setUsrId(String usrId) {
+        this.userId = usrId;
     }
 }

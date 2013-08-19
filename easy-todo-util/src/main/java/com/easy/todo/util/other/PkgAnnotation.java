@@ -1,4 +1,4 @@
-package com.easy.todo.util.Cookie;
+package com.easy.todo.util.other;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

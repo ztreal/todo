@@ -6,6 +6,6 @@
 **/
 
 @PkgAnnotation
-package com.easy.todo.util.Cookie;
+package com.easy.todo.util.other;
 
 
