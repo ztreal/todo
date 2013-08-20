@@ -8,15 +8,17 @@ package com.easy.todo.util.other;
  */
 public class IDGenerate {
 
-    public static String generateUserID() {
+
+
+
+    public static String generateSessionID() {
         StringBuilder sb = new StringBuilder();
-        sb.append("U"); //用户id标识
+        sb.append("SID_"); //用户id标识
         sb.append(GuId.get());
         return sb.toString();
     }
 
-
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         for (int a = 1; a < 100; a++) {
             GuId createGuId = GuId.get();
             System.out.println("机器标志为"+createGuId.getMachineID());

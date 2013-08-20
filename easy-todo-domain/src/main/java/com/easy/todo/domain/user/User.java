@@ -10,11 +10,11 @@ import org.springframework.data.annotation.Id;
 public class User{
 
     @Id
-    public String userId; //用户id
-    public String email;//用户邮箱
-    public Integer sex;//用户性别
-    public Integer  userType;//用户类型
-    public String pwd;//用户密码
+    public String userId;
+    public String email;
+    public Integer sex;
+    public Integer  userType;
+    public String pwd;
 
     public User() {
     }

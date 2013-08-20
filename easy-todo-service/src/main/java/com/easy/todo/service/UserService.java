@@ -19,5 +19,5 @@ public interface UserService {
      * 用户登陆
      * @param user
      */
-    public void login(User user) throws Exception;
+    public boolean login(User user) throws Exception;
 }
