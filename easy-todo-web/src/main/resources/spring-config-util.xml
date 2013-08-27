@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        >
+
+    <bean id="constantsUtil" class="com.easy.todo.domain.constants.TodoConstantsUtil" init-method="init">
+        <property name="todoDynamicConstants" ref="todoDynamicConstants"/>
+    </bean>
+
+    <bean id="todoDynamicConstants" class="com.easy.todo.domain.constants.TodoDynamicConstants">
+        <property name="domain" value="${todo.domain}"/>
+        <property name="loginCookieDayTime" value="${todo.loginCookieDayTime}"/>
+        <property name="cookieKey" value="${cookie.key}" />
+    </bean>
+
+
+
+</beans>

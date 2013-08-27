@@ -8,8 +8,8 @@ package com.easy.todo.domain.enumerate;
  */
 public enum PrefixEnum {
 
-    SESSION_MAP("SESSION_MAP_", "session的map集合"),
-    SESSION_ID("SESSION_ID_", "手机端");
+    SESSION_MAP("SESSION_MAP:", "session的map集合"),
+    SESSION_ID("SESSION_ID:", "手机端");
 
     private final String value;
     private final String name;

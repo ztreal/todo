@@ -15,6 +15,12 @@
     <url>http://todo.zt.com</url>
     <dependencies>
 
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>1.5.1.RELEASE</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>easy-todo-domain-${project.version}</finalName>

@@ -1,5 +1,5 @@
 #set($layout = "/layout/empty.vm") ##选择布局页面
-#set($page_title ="easyToDoIndex")
+#set($page_title ="简单待办任务列表")
 #set($name = "easyToDoIndex")
 <!DOCTYPE html>
 <html lang="en">

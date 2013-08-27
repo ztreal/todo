@@ -1,5 +1,6 @@
 package com.easy.todo.util.cookie;
 
+import com.easy.todo.domain.constants.TodoConstantsUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,9 +19,11 @@ import java.util.Map;
  * Date: 2011-9-5
  * Time: 18:34:49
  */
+
 public class CookieUtils {
     private final static Log log = LogFactory.getLog(CookieUtils.class);
     private Map<String, EasyCookie> cookieMap;
+
 
     /**
      * 从cookie中取值值，会自动解密(如果是加密保存)。
@@ -35,11 +38,15 @@ public class CookieUtils {
             for (Cookie cookie : cookies) {
                 String cookieName = cookie.getName();
                 if (cookieName.equals(name)) {
-                    if (cookieMap != null && cookieMap.containsKey(name)) {
-                        EasyCookie EasyCookie = cookieMap.get(name);
-                        return EasyCookie.getValue(cookie.getValue());
-                    }
-                    return cookie.getValue();
+//                    if (cookieMap != null && cookieMap.containsKey(name)) {
+//                        EasyCookie easyCookie = cookieMap.get(name);
+                    EasyCookie easyCookie = new EasyCookie();
+                    easyCookie.setKey(TodoConstantsUtil.cookieKey);
+                    easyCookie.setEncrypt(true);
+                    easyCookie.setExpiry(TodoConstantsUtil.loginCookieSecondTime);
+                    return easyCookie.getValue(cookie.getValue());
+//                    }
+//                    return cookie.getValue();
                 }
             }
         }
@@ -53,15 +60,15 @@ public class CookieUtils {
      * @param name
      */
     public final void deleteCookie(HttpServletResponse servletResponse, String name) {
-        Cookie cookie;
-        if (cookieMap != null && cookieMap.containsKey(name)) {
-            EasyCookie EasyCookie = cookieMap.get(name);
-            cookie = EasyCookie.newCookie(null);
-        } else {
-            cookie = new Cookie(name, null);
-        }
-        cookie.setMaxAge(0);
-        servletResponse.addCookie(cookie);
+//        Cookie cookie;
+//        if (cookieMap != null && cookieMap.containsKey(name)) {
+//            EasyCookie easyCookie = cookieMap.get(name);
+//
+//        } else {
+//            cookie = new Cookie(name, null);
+//        }
+//        cookie.setMaxAge(0);
+//        servletResponse.addCookie(cookie);
     }
 
     /**
@@ -123,7 +130,7 @@ public class CookieUtils {
      *
      * @param
      */
-    public void addEasyCookie(HttpServletResponse servletResponse,String domain, String name, int expiry ,String value) {
+    public void addEasyCookie(HttpServletResponse servletResponse, String domain, String name, int expiry, String value) {
 
         EasyCookie easyCookie = new EasyCookie();
         easyCookie.setDomain(domain);
@@ -131,6 +138,8 @@ public class CookieUtils {
         easyCookie.setExpiry(expiry);
         easyCookie.setPath("/");
         easyCookie.setEncrypt(true);
+        easyCookie.setExpiry(TodoConstantsUtil.loginCookieSecondTime);
+        easyCookie.setKey(TodoConstantsUtil.cookieKey);
         Cookie cookie = easyCookie.newCookie(value);
         servletResponse.addCookie(cookie);
 

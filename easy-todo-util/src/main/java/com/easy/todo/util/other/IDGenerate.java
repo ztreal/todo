@@ -1,5 +1,7 @@
 package com.easy.todo.util.other;
 
+import java.util.Random;
+
 /**
  * 主键生成工具类.
  * User: zhangtan
@@ -11,10 +13,12 @@ public class IDGenerate {
 
 
 
-    public static String generateSessionID() {
+    public static String generateSessionID(String UID) {
         StringBuilder sb = new StringBuilder();
         sb.append("SID_"); //用户id标识
-        sb.append(GuId.get());
+        sb.append(UID).append("_");
+        sb.append(GuId.get().getTime());
+        sb.append((new Random()).nextInt(3));
         return sb.toString();
     }
 

@@ -1,8 +1,9 @@
+#set($page_title ="用户登陆")
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Sign in &middot; Twitter Bootstrap</title>
+    <title>Sign in</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -61,14 +62,14 @@
 
     <div class="container">
 
-      <form class="form-signin">
-        <h2 class="form-signin-heading">注册</h2>
-        <input type="text" class="input-block-level" placeholder="Email address">
-        <input type="password" class="input-block-level" placeholder="Password">
+      <form class="form-signin" action="/login">
+        <h2 class="form-signin-heading">登陆</h2>
+        <input type="text" class="input-block-level" placeholder="Email address" id="email" name="email">
+        <input type="password" class="input-block-level" placeholder="Password" id="password" name="password">
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> 下次免登陆
         </label>
-        <button class="btn btn-large btn-primary" type="submit">注册</button>
+        <button class="btn btn-large btn-primary" type="submit">登陆</button>
       </form>
 
     </div> <!-- /container -->

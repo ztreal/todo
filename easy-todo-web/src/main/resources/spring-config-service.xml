@@ -39,6 +39,11 @@
         <property name="connectionFactory" ref="jedisConnection"/>
     </bean>
 
+    <bean class="com.easy.todo.util.cookie.CookieUtils" />
+
+
+
+
     <!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"-->
     <!--p:connection-factory-ref="jedisConnection"/>-->
 </beans>

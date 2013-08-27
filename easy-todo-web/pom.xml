@@ -27,14 +27,14 @@
         <!--<version>6.0.37</version>-->
         <!--</dependency>-->
         <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.1.31</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>3.1.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.easytodo.com</groupId>
@@ -86,6 +86,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -140,10 +145,16 @@
                 <redis.pool.maxWait>500</redis.pool.maxWait>
                 <!-- 当调用borrow Object方法时，是否进行有效性检查 -->
                 <redis.pool.testOnBorrow>true</redis.pool.testOnBorrow>
-
+                <!--域名-->
+                <todo.domain>localhost</todo.domain>
+                <!--cookie失效期分钟-->
+                <todo.loginCookieDayTime>7</todo.loginCookieDayTime>
+                <todo.sessionMinTime>30</todo.sessionMinTime>
 
                 <redis.ip>42.121.52.175</redis.ip>
                 <redis.port>6379</redis.port>
+                <cookie.expiry>1</cookie.expiry>
+                <cookie.key>11111</cookie.key>
             </properties>
         </profile>
 

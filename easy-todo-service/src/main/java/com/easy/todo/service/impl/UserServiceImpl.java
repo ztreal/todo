@@ -1,5 +1,6 @@
 package com.easy.todo.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.easy.todo.dao.UserDao;
 import com.easy.todo.domain.enumerate.PrefixEnum;
 import com.easy.todo.domain.enumerate.TerminalEnum;
@@ -37,7 +38,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         log.info("add user sucess! email = " + user.getEmail());
     }
 
-    public boolean login(User user) throws ExceptionList {
+    public String login(User user) throws ExceptionList {
         List<Throwable> causes = new ArrayList<Throwable>();
         boolean rs = false;
         User userRs = userDao.selectUserByEmail(user.getEmail());
@@ -55,24 +56,30 @@ public class UserServiceImpl extends BaseService implements UserService {
             log.info("user login sucess! email = " + user.getEmail());
             rs = true;
         }
-        Map data = new HashMap();
+        if (causes.size() > 0) {
+            throw new ExceptionList(causes);
+        }
+
+        return cacheLoginInfo(userRs);
+    }
+
+    /**
+     * 缓存session和用户信息
+     * @param userRs  根据登录名查出来的用户信息
+     * @return
+     */
+    public String cacheLoginInfo(User userRs) {
+        Map<String, String> data = new HashMap<String, String>();
         BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP + userRs.getUserId());
-        String sessionID = IDGenerate.generateSessionID();
+        String sessionID = IDGenerate.generateSessionID(userRs.getUserId());
         SessionInfo sessionInfo = new SessionInfo();
         sessionInfo.setCreateDate(new Date());
         sessionInfo.setUpdateTime(new Date());
         sessionInfo.setSessionId(sessionID);
         sessionInfo.settId(TerminalEnum.Terminal_WEB.getValue());
-        data.put(sessionInfo.getSessionId(),sessionInfo);
+        data.put(PrefixEnum.SESSION_MAP + sessionID, JSONObject.toJSON(sessionInfo).toString());
         ops.putAll(data);
-
-        if (causes.size() > 0) {
-            throw new ExceptionList(causes);
-        }
-        ops.putAll(data);
-
-
-
-        return rs;
+        return sessionID;
     }
+
 }

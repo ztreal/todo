@@ -1,6 +1,5 @@
 package com.easy.todo.util.cookie;
 
-import com.easy.todo.util.cookie.encryption.DesEncrypter;
 import com.easy.todo.util.cookie.encryption.PBECoder;
 import org.apache.commons.lang.StringUtils;
 
@@ -44,7 +43,7 @@ public class EasyCookie {
      * cookie的key
      *
      */
-    private String key = "f**(_f`1323y@^6t6fge@";
+    private String key ;
 
 
     public String getName() {
@@ -129,9 +128,14 @@ public class EasyCookie {
         return cookie;
     }
 
-    public String getValue(String value) {
+    public String getValue(String value)  {
         if (!StringUtils.isEmpty(value)) {
-            return isEncrypt() ? DesEncrypter.decrypt(value) : value;
+            try {
+                return isEncrypt() ? PBECoder.decrypt(value,key) : value;
+            } catch (Exception e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            return null;
         } else {
             return value;
         }

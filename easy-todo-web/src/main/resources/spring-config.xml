@@ -8,17 +8,18 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-<!-- 属性文件读入 -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:todo-production.properties</value>
-			</list>
-		</property>
-	</bean>
+    <!-- 属性文件读入 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:todo-production.properties</value>
+            </list>
+        </property>
+    </bean>
     <import resource="spring-config-mongo.xml"/>
-	<import resource="spring-config-dao.xml" />
-	<import resource="spring-config-service.xml" />
+    <import resource="spring-config-dao.xml"/>
+    <import resource="spring-config-service.xml"/>
+    <import resource="spring-config-util.xml"/>
 
     <!--定义异常处理页面-->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
@@ -31,72 +32,73 @@
     </bean>
 
     <!-- 属性文件读入 -->
-       <context:property-placeholder location="classpath:todo-production.properties"/>
-       <!--<import resource="spring-config-datasource-mongodb.xml" />-->
+    <context:property-placeholder location="classpath:todo-production.properties"/>
+    <!--<import resource="spring-config-datasource-mongodb.xml" />-->
 
-       <!--<import resource="spring-config-datasource-${solr.jdbc.datasource.type}.xml"/>-->
-
-
-       <context:component-scan base-package="com.easy.todo"/>
+    <!--<import resource="spring-config-datasource-${solr.jdbc.datasource.type}.xml"/>-->
 
 
-       <!-- 解决字符串乱码 -->
-       <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-           <property name="messageConverters">
-               <list>
-                   <bean
-                           class="org.springframework.http.converter.StringHttpMessageConverter">
-                       <property name="supportedMediaTypes">
-                           <list>
-                               <value>text/html;charset=UTF-8</value>
-                           </list>
-                       </property>
-                   </bean>
-               </list>
-           </property>
-       </bean>
+    <context:component-scan base-package="com.easy.todo"/>
 
 
-       <bean id="velocityConfig"
-             class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-           <property name="resourceLoaderPath" value="/WEB-INF/vm/"/>
-           <property name="configLocation" value="classpath:velocity.properties"/>
-       </bean>
+    <!-- 解决字符串乱码 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean
+                        class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
 
-       <bean id="viewResolver"
-             class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-           <property name="cache" value="false"/>
-           <property name="prefix" value=""/>
-           <property name="suffix" value=".vm"/>
-           <!--<property name="toolboxConfigLocation" value="WEB-INF/classes/toolbox.xml"/>-->
-           <property name="toolboxConfigLocation" value="toolbox.xml"/>
-           <property name="contentType" value="text/html;charset=utf-8"/>
-           <property name="exposeSpringMacroHelpers" value="true"/>
-           <property name="viewClass" value="com.easy.todo.util.spring.VelocityToolsView"/>
-           <!--<property name="attributesMap">-->
-           <!--<map>-->
-           <!--&lt;!&ndash;Velocity Escape Tool&ndash;&gt;-->
-           <!--<entry key="esc"><bean class="org.apache.velocity.tools.generic.EscapeTool"/></entry>-->
-           <!--</map>-->
-           <!--</property>-->
-       </bean>
+    <bean id="velocityConfig"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/vm/"/>
+        <property name="configLocation" value="classpath:velocity.properties"/>
+    </bean>
+
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="false"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".vm"/>
+        <!--<property name="toolboxConfigLocation" value="WEB-INF/classes/toolbox.xml"/>-->
+        <property name="toolboxConfigLocation" value="toolbox.xml"/>
+        <property name="contentType" value="text/html;charset=utf-8"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="viewClass" value="com.easy.todo.util.spring.VelocityToolsView"/>
+        <!--<property name="attributesMap">-->
+        <!--<map>-->
+        <!--&lt;!&ndash;Velocity Escape Tool&ndash;&gt;-->
+        <!--<entry key="esc"><bean class="org.apache.velocity.tools.generic.EscapeTool"/></entry>-->
+        <!--</map>-->
+        <!--</property>-->
+    </bean>
+
+
+    <bean id="authorizeInterceptor" class="com.easy.todo.web.interceptor.LoginInterceptor">
+    <property name="mappingURL" value=".*/my.*" />
+    </bean>
+   <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
 
 
-    <!--<bean id="springSessionInterceptor" class="com.easy.todo.web.interceptor.LoginInterceptor" >-->
-         <!--</bean>-->
-    <!--<bean id="autoPorxyFactoryBean1"-->
-            <!--class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">-->
-            <!--<property name="interceptorNames">-->
-                <!--<list>-->
-                    <!--<value>loginInterceptor</value>-->
-                <!--</list>-->
-            <!--</property>-->
-            <!--<property name="beanNames" >-->
-            <!--<list>-->
-                <!--<value>*Action</value>-->
-                <!--</list>-->
-            <!--</property>-->
-        <!--</bean>-->
+    <bean id="springSessionInterceptor"
+          class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="authorizeInterceptor"/>
+            </list>
+        </property>
+    </bean>
+
+
 </beans>
