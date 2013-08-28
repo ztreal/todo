@@ -22,6 +22,14 @@ public class IDGenerate {
         return sb.toString();
     }
 
+    public static String generateContextID() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CTX_"); //用户id标识
+        sb.append(GuId.get().toString());
+        sb.append((new Random()).nextInt(3));
+        return sb.toString();
+    }
+
     private static void main(String[] args) {
         for (int a = 1; a < 100; a++) {
             GuId createGuId = GuId.get();

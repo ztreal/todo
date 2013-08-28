@@ -13,6 +13,6 @@
         <property name="cookieKey" value="${cookie.key}" />
     </bean>
 
-
+    <!--<bean id="md5Util" class="com.easy.todo.util.other.Md5Util"/>-->
 
 </beans>

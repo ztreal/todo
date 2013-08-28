@@ -24,6 +24,11 @@ public class Context {
      * 分类名称
      */
     public String name;
+
+    /**
+     * 是否为默认激活
+     */
+    public boolean defaultActive;
     /**
      * 分类创建时间
      */
@@ -77,5 +82,21 @@ public class Context {
 
     public void setUsrId(String usrId) {
         this.userId = usrId;
+    }
+
+    public boolean isDefaultActive() {
+        return defaultActive;
+    }
+
+    public void setDefaultActive(boolean defaultActive) {
+        this.defaultActive = defaultActive;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -4,6 +4,7 @@ import com.easy.todo.domain.constants.TodoConstantsUtil;
 import com.easy.todo.domain.user.User;
 import com.easy.todo.service.UserService;
 import com.easy.todo.util.cookie.CookieUtils;
+import com.easy.todo.util.other.Md5Util;
 import com.easy.todo.util.spring.BaseAction;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -43,9 +44,10 @@ public class UserAction extends BaseAction {
     public String register(@RequestParam("email") String email, @RequestParam("pwd") String pwd) {
         User user = new User();
         user.setEmail(email);
-        user.setPwd(pwd);
+        String password = Md5Util.getMD5(pwd);
+        user.setPwd(password);
         userService.insertUser(user);
-        return "to-index";
+        return "login";
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET,
@@ -54,7 +56,8 @@ public class UserAction extends BaseAction {
         List<Throwable> exceptionList = new ArrayList<Throwable>();
         User user = new User();
         user.setEmail(email);
-        user.setPwd(pwd);
+        String password = Md5Util.getMD5(pwd);
+        user.setPwd(password);
         String sid = null;
         try {
              sid = userService.login(user);

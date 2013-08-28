@@ -3,9 +3,12 @@ package com.easy.todo.dao.impl;
 import com.easy.todo.dao.TodoDao;
 import com.easy.todo.domain.todo.Todo;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 任务事项管理dao.
@@ -21,4 +24,11 @@ public class TodoDaoImpl implements TodoDao {
     public void addTodo(Todo todo){
         mongoOps.insert(todo);
     }
+
+    @Override
+    public List<Todo> listTodo(String ctxId) {
+        return   mongoOps.find(new Query(Criteria.where("contextId").is(ctxId)), Todo.class);
+    }
+
+
 }

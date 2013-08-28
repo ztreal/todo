@@ -2,6 +2,8 @@ package com.easy.todo.dao;
 
 import com.easy.todo.domain.todo.Todo;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhangtan
@@ -14,5 +16,11 @@ public interface TodoDao {
      * @param todo
      */
     public void addTodo(Todo todo);
+
+    /**
+     * 根据上下文id获取待办事项列表
+     * @param ctxId
+     */
+    public List<Todo>  listTodo(String ctxId);
 
 }

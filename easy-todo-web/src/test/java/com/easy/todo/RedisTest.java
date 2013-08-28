@@ -96,8 +96,8 @@ public class RedisTest extends BaseTestCase {
     public void testMap() {
         Map<String, String> data = new HashMap<String, String>();
 
-//        测试写入map
-        BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP + "AAAAAA");
+//        测试写入map     SESSION_MAPSID_5215c904c2e6edd8f77a4fb6_13776717560001
+        BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP.getValue() + "AAAAAA");
         String sessionID = IDGenerate.generateSessionID("");
         SessionInfo sessionInfo = new SessionInfo();
         sessionInfo.setCreateDate(new Date());

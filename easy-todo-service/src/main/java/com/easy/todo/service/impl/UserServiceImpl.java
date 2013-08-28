@@ -70,14 +70,14 @@ public class UserServiceImpl extends BaseService implements UserService {
      */
     public String cacheLoginInfo(User userRs) {
         Map<String, String> data = new HashMap<String, String>();
-        BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP + userRs.getUserId());
+        BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP.getValue() + userRs.getUserId());
         String sessionID = IDGenerate.generateSessionID(userRs.getUserId());
         SessionInfo sessionInfo = new SessionInfo();
         sessionInfo.setCreateDate(new Date());
         sessionInfo.setUpdateTime(new Date());
         sessionInfo.setSessionId(sessionID);
         sessionInfo.settId(TerminalEnum.Terminal_WEB.getValue());
-        data.put(PrefixEnum.SESSION_MAP + sessionID, JSONObject.toJSON(sessionInfo).toString());
+        data.put(PrefixEnum.SESSION_MAP.getValue() + sessionID, JSONObject.toJSON(sessionInfo).toString());
         ops.putAll(data);
         return sessionID;
     }

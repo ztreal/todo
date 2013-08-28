@@ -11,7 +11,7 @@
     <meta name="author" content="张坦">
 
     <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
         body {
             padding-top: 20px;
@@ -22,7 +22,7 @@
             padding: 9px 0;
         }
     </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -42,16 +42,19 @@
     <div class="row-fluid">
         <div class="span3">
             <div class="well sidebar-nav">
-                <ul class="nav nav-list">
+                <ul class="nav nav-list" id="ctxList">
                     <li class="nav-header">
                         任务列表
                     </li>
-                    <li class="active">
-                        <a href="#">工作</a>
-                    </li>
-                    <li>
-                        <a href="#">家庭</a>
-                    </li>
+                    #foreach($context in $contextList)
+                        <li #if($context.defaultActive)
+                                class="active"
+                        #end
+                                ctxid="$context.id"
+                                >
+                            <a href="#">$context.name</a>
+                        </li>
+                    #end
                 </ul>
             </div>
             <!--/.well -->
@@ -69,12 +72,12 @@
                 </div>
 
                 <div id="todoListContent">
-                    #if($todo)
+                    #if($todoList)
                         <table class="table table-striped">
                             <thead>
                             <th>内容</th>
                             </thead>
-                            #foreach($todo in $todoListDto.userList)
+                            #foreach($todo in $todoList)
                                 <tr>
                                     <td>$!todo.content</td>
                                 </tr>
@@ -105,36 +108,53 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap-transition.js"></script>
-<script src="js/bootstrap-alert.js"></script>
-<script src="js/bootstrap-modal.js"></script>
-<script src="js/bootstrap-dropdown.js"></script>
-<script src="js/bootstrap-scrollspy.js"></script>
-<script src="js/bootstrap-tab.js"></script>
-<script src="js/bootstrap-tooltip.js"></script>
-<script src="js/bootstrap-popover.js"></script>
-<script src="js/bootstrap-button.js"></script>
-<script src="js/bootstrap-collapse.js"></script>
-<script src="js/bootstrap-carousel.js"></script>
-<script src="js/bootstrap-typeahead.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap-transition.js"></script>
+<script src="/js/bootstrap-alert.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/bootstrap-dropdown.js"></script>
+<script src="/js/bootstrap-scrollspy.js"></script>
+<script src="/js/bootstrap-tab.js"></script>
+<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/js/bootstrap-popover.js"></script>
+<script src="/js/bootstrap-button.js"></script>
+<script src="/js/bootstrap-collapse.js"></script>
+<script src="/js/bootstrap-carousel.js"></script>
+<script src="/js/bootstrap-typeahead.js"></script>
 </body>
 
 <script>
+
+
     jQuery(function ($) {
+
+        var getActiveCtx = function(){
+            var ctx ;
+            $("#ctxList").find("li").each(function(i){
+                if($(this).hasClass("active")){
+                    ctx = $(this).attr("ctxid");
+                }
+            });
+            return ctx;
+        };
+
+
+
         $("#add").click(function () {
             var btn = $("#add");
             btn.button('loading');
             var todoContent = $("#todoContent").val();
             var rsContent = $("#rs");
+            var ctxId = getActiveCtx();
             $.ajax({
                 async: false,
                 cache: false,
-                url: "addTodo?content=" + todoContent,
+                url: "addTodo?content=" + todoContent + "&ctxId=" + ctxId,
                 type: 'get',
                 dataType: 'json',
                 success: function () {
 //                    if (data != null && data.userList != null) {
+                    rsContent.empty();
                     rsContent.css("display", "block");
                     rsContent.addClass("alert alert-success");
                     rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>添加成功!\</strong> ');

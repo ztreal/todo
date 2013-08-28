@@ -1,13 +1,17 @@
 package com.easy.todo.web.action;
 
-import com.easy.todo.service.TodoService;
+import com.easy.todo.service.MyTodoService;
 import com.easy.todo.util.spring.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * User: zhangtan
@@ -19,8 +23,16 @@ public class IndexAction extends BaseAction {
 
 
     @Resource
-    private TodoService todoService;
+    private MyTodoService myTodoService;
+    private HttpServletRequest request;
 
+    private HttpServletResponse response;
+
+    @ModelAttribute
+    public void setRequestAndResponse(HttpServletRequest request, HttpServletResponse response) {
+        this.response = response;
+        this.request = request;
+    }
 
     @RequestMapping(value = "/index", method = {RequestMethod.GET,
             RequestMethod.POST})
@@ -37,7 +49,12 @@ public class IndexAction extends BaseAction {
     @RequestMapping(value = "/to-login", method = {RequestMethod.GET,
             RequestMethod.POST})
     public String toLogin(Model model) {
-        return "login";
+        try {
+            response.sendRedirect("login");
+        } catch (IOException e) {
+            log.error("to login error -->",e);
+        }
+        return null;
     }
 
 

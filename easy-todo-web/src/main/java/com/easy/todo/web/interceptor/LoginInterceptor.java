@@ -58,11 +58,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         //判断session是否有效
         boolean loginCookieValid = false;
         String cookieSessionId = cookieUtils.getCookieValue(request, TodoConstantsUtil.SESSION_COOKIE_NAME);
+        request.setAttribute("sid",cookieSessionId);
         if (StringUtils.isNotEmpty(cookieSessionId)) {
-            String uid = cookieSessionId.substring(cookieSessionId.indexOf("_"), cookieSessionId.lastIndexOf("_"));
-            BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP + uid);
+            String uid = cookieSessionId.substring(cookieSessionId.indexOf("_")+1, cookieSessionId.lastIndexOf("_"));
+            request.setAttribute("uid",uid);
+            BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP.getValue() + uid);
             Map<String, String> redisTatleMap = ops.entries();
-            ops.expire(24L, TimeUnit.HOURS);
+
             for (Map.Entry entry : redisTatleMap.entrySet()) {
 
                 if (null != entry.getValue()) {
@@ -70,13 +72,14 @@ public class LoginInterceptor implements HandlerInterceptor {
                     String sessionValue = entry.getValue().toString();
                     SessionInfo sessionInfo = JSONObject.parseObject(sessionValue, SessionInfo.class);
                     //获取到session信息
-                    if (sessionKey.equals(cookieSessionId)) {
+                    if (sessionInfo.getSessionId().equals(cookieSessionId)) {
                         //如果已经超时则超时删除
                         if (((new DateTime(sessionInfo.getUpdateTime())).plusMillis(sessionTimeout).toDate()).after(new Date())) {
                             ops.delete(sessionKey);
                         } else {
                             loginCookieValid = true;
                             sessionInfo.setUpdateTime(new Date());
+                            ops.expire(24L, TimeUnit.HOURS);
                             ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
                         }
 
@@ -95,8 +98,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url = request.getRequestURI();
-        log.info("login intercept begin！target is " + url);
         if (mappingURL == null || url.matches(mappingURL)) {
+            log.info("login intercept begin！target is " + url);
             if (updateCookie(request, response)) {
                 return true;
             } else {
