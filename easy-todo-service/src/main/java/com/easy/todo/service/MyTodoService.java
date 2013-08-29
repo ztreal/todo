@@ -28,4 +28,10 @@ public interface MyTodoService {
      * @return
      */
     public List<Todo> getMyTodoListByCtxId(String ctxId);
+
+    /**
+     * 根据待办事项主键删除一个待办事项
+     * @param todoId
+     */
+    public void delTodo(String todoId);
 }

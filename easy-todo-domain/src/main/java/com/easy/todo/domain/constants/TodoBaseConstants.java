@@ -8,4 +8,6 @@ package com.easy.todo.domain.constants;
  */
 public interface TodoBaseConstants {
     String DEFAULT_CONTEXT = "个人";
+    String COOKIE_REMBER = "1";
+
 }

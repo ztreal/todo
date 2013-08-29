@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * User: zhangtan
@@ -49,12 +48,13 @@ public class IndexAction extends BaseAction {
     @RequestMapping(value = "/to-login", method = {RequestMethod.GET,
             RequestMethod.POST})
     public String toLogin(Model model) {
-        try {
-            response.sendRedirect("login");
-        } catch (IOException e) {
-            log.error("to login error -->",e);
-        }
-        return null;
+//        try {
+//            response.sendRedirect("login");
+//        } catch (IOException e) {
+//            log.error("to login error -->",e);
+//        }
+//        return null;
+        return "login";
     }
 
 

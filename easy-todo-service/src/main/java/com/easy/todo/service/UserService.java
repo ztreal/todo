@@ -19,5 +19,5 @@ public interface UserService {
      * 用户登陆
      * @param user
      */
-    public String login(User user) throws Exception;
+    public String login(User user,boolean remberCookie) throws Exception;
 }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
@@ -58,10 +59,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         //判断session是否有效
         boolean loginCookieValid = false;
         String cookieSessionId = cookieUtils.getCookieValue(request, TodoConstantsUtil.SESSION_COOKIE_NAME);
-        request.setAttribute("sid",cookieSessionId);
+        request.setAttribute("sid", cookieSessionId);
         if (StringUtils.isNotEmpty(cookieSessionId)) {
-            String uid = cookieSessionId.substring(cookieSessionId.indexOf("_")+1, cookieSessionId.lastIndexOf("_"));
-            request.setAttribute("uid",uid);
+            String uid = cookieSessionId.substring(cookieSessionId.indexOf("_") + 1, cookieSessionId.lastIndexOf("_"));
+            request.setAttribute("uid", uid);
             BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP.getValue() + uid);
             Map<String, String> redisTatleMap = ops.entries();
 
@@ -71,20 +72,34 @@ public class LoginInterceptor implements HandlerInterceptor {
                     String sessionKey = entry.getValue().toString();
                     String sessionValue = entry.getValue().toString();
                     SessionInfo sessionInfo = JSONObject.parseObject(sessionValue, SessionInfo.class);
-                    //获取到session信息
+                    //根据cookieId从缓存中取出session相关信息
                     if (sessionInfo.getSessionId().equals(cookieSessionId)) {
-                        //如果已经超时则超时删除
-                        if (((new DateTime(sessionInfo.getUpdateTime())).plusMillis(sessionTimeout).toDate()).after(new Date())) {
-                            ops.delete(sessionKey);
-                        } else {
-                            loginCookieValid = true;
-                            sessionInfo.setUpdateTime(new Date());
-                            ops.expire(24L, TimeUnit.HOURS);
-                            ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
+                        //如果是一周免登陆的
+                        if (sessionInfo.isValid()) {
+                            if (((new DateTime(sessionInfo.getUpdateTime())).plusSeconds(TodoConstantsUtil.loginCookieSecondTime).toDate()).before(new Date())) {
+                                ops.delete(sessionKey);
+                            } else {
+                                loginCookieValid = true;
+                                sessionInfo.setUpdateTime(new Date());
+                                ops.expire(24L, TimeUnit.HOURS);
+                                ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
+                            }
+                        } else { //非一周免登陆的有效期为30分钟
+                            if (((new DateTime(sessionInfo.getUpdateTime())).plusMinutes(sessionTimeout).toDate()).before(new Date())) {
+                                ops.delete(sessionKey);
+                            } else {
+                                loginCookieValid = true;
+                                sessionInfo.setUpdateTime(new Date());
+                                ops.expire(24L, TimeUnit.HOURS);
+                                ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
+                            }
                         }
 
-                    } else if (sessionInfo.getUpdateTime().after((new DateTime()).plusMillis(sessionTimeout).toDate())) {
-                        ops.delete(sessionKey);   //如果已经超时则删除
+                    //根据cookie中的sessionId在缓存中没有找到相关信息，则删除cookie中的sid
+                    } else  {
+                        Cookie cookie = new Cookie(TodoConstantsUtil.SESSION_COOKIE_NAME, null);
+                        cookie.setMaxAge(0);      //0立刻删除
+                        response.addCookie(cookie);     //如果已经超时则删除
                     }
                 }
 

@@ -10,6 +10,9 @@ import java.util.Date;
  */
 public class Todo {
 
+
+    public String todoId;
+
     public String usrId;
     /**
      * 待办事项内容
@@ -19,6 +22,7 @@ public class Todo {
      * 记录的时候的地址
      */
     public String adress;
+
     public String ip;
     /**
      * 经度*10W保存
@@ -32,11 +36,20 @@ public class Todo {
     /**
      * 所属上线文
      */
-    public String ContextId;
+    public String contextId;
 
     public Date createDate;
 
     public Date updateDate;
+
+
+    public String getTodoId() {
+        return todoId;
+    }
+
+    public void setTodoId(String todoId) {
+        this.todoId = todoId;
+    }
 
     public String getUsrId() {
         return usrId;
@@ -103,10 +116,10 @@ public class Todo {
     }
 
     public String getContextId() {
-        return ContextId;
+        return contextId;
     }
 
     public void setContextId(String contextId) {
-        ContextId = contextId;
+        this.contextId = contextId;
     }
 }

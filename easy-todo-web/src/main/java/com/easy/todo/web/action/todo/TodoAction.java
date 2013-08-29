@@ -4,6 +4,7 @@ import com.easy.todo.domain.context.Context;
 import com.easy.todo.domain.todo.Todo;
 import com.easy.todo.service.MyTodoService;
 import com.easy.todo.service.UserService;
+import com.easy.todo.util.other.IDGenerate;
 import com.easy.todo.util.spring.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +54,7 @@ public class TodoAction extends BaseAction {
                 log.error("medthod myToDoList :response error -->", e);
             }
         }
+        todo.setTodoId(IDGenerate.generateTodoID());
         todo.setContent(content);
         todo.setContextId(ctxId);
         todo.setUsrId(userId.toString());
@@ -62,6 +64,14 @@ public class TodoAction extends BaseAction {
         return "OK";
     }
 
+
+    @RequestMapping(value = "/my/delTodo", method = {RequestMethod.GET,
+               RequestMethod.POST})
+       @ResponseBody
+       public String delTodo(@RequestParam("todoId") String todoId) {
+           myTodoService.delTodo(todoId);
+           return "OK";
+       }
 
     @RequestMapping(value = "/my/my-todo-list", method = {RequestMethod.GET,
             RequestMethod.POST})

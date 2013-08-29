@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+
 /**
  * 任务事项管理dao.
  * User: zhangtan
@@ -23,6 +25,10 @@ public class TodoDaoImpl implements TodoDao {
 
     public void addTodo(Todo todo){
         mongoOps.insert(todo);
+    }
+
+    public void delTodo(String todoId){
+        mongoOps.remove(new Query(where("todoId").is(todoId)), "todo");
     }
 
     @Override

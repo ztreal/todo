@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class CookieUtils {
                     EasyCookie easyCookie = new EasyCookie();
                     easyCookie.setKey(TodoConstantsUtil.cookieKey);
                     easyCookie.setEncrypt(true);
-                    easyCookie.setExpiry(TodoConstantsUtil.loginCookieSecondTime);
+//                    easyCookie.setExpiry(TodoConstantsUtil.loginCookieSecondTime);
                     return easyCookie.getValue(cookie.getValue());
 //                    }
 //                    return cookie.getValue();
@@ -130,22 +129,42 @@ public class CookieUtils {
      *
      * @param
      */
-    public void addEasyCookie(HttpServletResponse servletResponse, String domain, String name, int expiry, String value) {
+    public void addEasyCookie(HttpServletResponse servletResponse, String domain, String name, boolean valid, String value) {
 
         EasyCookie easyCookie = new EasyCookie();
         easyCookie.setDomain(domain);
         easyCookie.setName(name);
-        easyCookie.setExpiry(expiry);
+
         easyCookie.setPath("/");
         easyCookie.setEncrypt(true);
-        easyCookie.setExpiry(TodoConstantsUtil.loginCookieSecondTime);
+
+
         easyCookie.setKey(TodoConstantsUtil.cookieKey);
         Cookie cookie = easyCookie.newCookie(value);
-        servletResponse.addCookie(cookie);
 
-        List<EasyCookie> EasyCookieList = new ArrayList<EasyCookie>();
-        EasyCookieList.add(easyCookie);
-        setEasyCookie(EasyCookieList);
+        StringBuilder cookieSb = new StringBuilder();
+        cookieSb.append(cookie.getName()).append("=");
+        cookieSb.append(cookie.getValue()).append(";");
+        cookieSb.append("Path=");
+        cookieSb.append(cookie.getPath()).append(";");
+        cookieSb.append("Domain=");
+        cookieSb.append(cookie.getDomain()).append(";");
+        cookieSb.append("Max-Age=");
+        if(valid) {
+            cookieSb.append(cookie.getMaxAge()) ;
+        }else{
+            cookieSb.append("") ;
+        }
+        cookieSb.append("HTTPOnly") ;
+
+
+        log.info(cookieSb.toString());
+        servletResponse.setHeader("Set-Cookie", cookieSb.toString());
+
+
+//        List<EasyCookie> EasyCookieList = new ArrayList<EasyCookie>();
+//        EasyCookieList.add(easyCookie);
+//        setEasyCookie(EasyCookieList);
 
     }
 

@@ -75,12 +75,12 @@
         <property name="contentType" value="text/html;charset=utf-8"/>
         <property name="exposeSpringMacroHelpers" value="true"/>
         <property name="viewClass" value="com.easy.todo.util.spring.VelocityToolsView"/>
-        <!--<property name="attributesMap">-->
-        <!--<map>-->
-        <!--&lt;!&ndash;Velocity Escape Tool&ndash;&gt;-->
-        <!--<entry key="esc"><bean class="org.apache.velocity.tools.generic.EscapeTool"/></entry>-->
-        <!--</map>-->
-        <!--</property>-->
+        <property name="attributesMap">
+        <map>
+        <!--Velocity Escape Tool-->
+        <entry key="esc"><bean class="org.apache.velocity.tools.generic.EscapeTool"/></entry>
+        </map>
+        </property>
     </bean>
 
 

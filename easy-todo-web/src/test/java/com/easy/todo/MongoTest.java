@@ -1,9 +1,11 @@
 package com.easy.todo;
 
-import com.easy.todo.domain.user.User;
-import com.mongodb.DBCollection;
+import com.easy.todo.domain.todo.Todo;
 import org.junit.Test;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,8 +19,8 @@ public class MongoTest extends BaseTestCase {
 
     @Test
     public void insertLog()  {
-        User user = new User("1","1",1,1);
-        mongoOps.insert(user);
+//        User user = new User("1","1",1,1);
+//        mongoOps.insert(user);
 //
 //
 //
@@ -26,11 +28,11 @@ public class MongoTest extends BaseTestCase {
 //
 //
 //        //save
-        mongoOps.save(user,"userLog");
+//        mongoOps.save(user,"userLog");
 //
 //        //find
-//        User savedLog =  mongoOps.findOne(new Query(where("operater").is("zt")), User.class);
-//
+        Todo todo =  mongoOps.findOne(new Query(where("todoId").is("TODO_521edec6c2e6ef69ed842d202")), Todo.class);
+         log.info(todo.getTodoId());
 //        log.error(savedLog);
 //        System.out.println("savedLog : " + savedLog);
 //
@@ -42,12 +44,12 @@ public class MongoTest extends BaseTestCase {
 //        System.out.println("updateResult : " + updateResult.getN());
 //
 //        //delete
-//        mongoOps.remove(new Query(where("operater").is("zt")),"userLog");
+        mongoOps.remove(new Query(where("todoId").is("TODO_521edec6c2e6ef69ed842d202")), "todo");
 //
 //        //List
-        DBCollection dBCollection = mongoOps.getCollection("user");
+//        DBCollection dBCollection = mongoOps.getCollection("user");
 
-        System.out.println("Number of user = " + dBCollection.getCount());
+//        System.out.println("Number of user = " + dBCollection.getCount());
     }
 
 

@@ -58,4 +58,8 @@ public class MyTodoServiceImpl extends BaseService implements MyTodoService {
         return todoDao.listTodo(ctxId);
     }
 
+    @Override
+    public void delTodo(String todoId){
+        todoDao.delTodo(todoId);
+    }
 }

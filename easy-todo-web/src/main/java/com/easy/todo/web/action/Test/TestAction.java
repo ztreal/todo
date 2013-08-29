@@ -35,7 +35,7 @@ public class TestAction extends BaseAction {
     @ResponseBody
     public String register(@RequestParam("value") String value) {
         CookieUtils cookieUtils = new CookieUtils();
-        cookieUtils.addEasyCookie(response, "localhost","test",0,value);//cookie有的效期
+        cookieUtils.addEasyCookie(response, "localhost","test",false,value);//cookie有的效期
 
 
         return "ok";

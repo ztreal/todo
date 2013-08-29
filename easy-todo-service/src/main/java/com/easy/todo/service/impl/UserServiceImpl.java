@@ -38,7 +38,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         log.info("add user sucess! email = " + user.getEmail());
     }
 
-    public String login(User user) throws ExceptionList {
+    public String login(User user,boolean remberCookie) throws ExceptionList {
         List<Throwable> causes = new ArrayList<Throwable>();
         boolean rs = false;
         User userRs = userDao.selectUserByEmail(user.getEmail());
@@ -60,7 +60,7 @@ public class UserServiceImpl extends BaseService implements UserService {
             throw new ExceptionList(causes);
         }
 
-        return cacheLoginInfo(userRs);
+        return cacheLoginInfo(userRs,remberCookie);
     }
 
     /**
@@ -68,7 +68,7 @@ public class UserServiceImpl extends BaseService implements UserService {
      * @param userRs  根据登录名查出来的用户信息
      * @return
      */
-    public String cacheLoginInfo(User userRs) {
+    private String cacheLoginInfo(User userRs,boolean remberCookie) {
         Map<String, String> data = new HashMap<String, String>();
         BoundHashOperations<Serializable, String, String> ops = redisTemplate.boundHashOps(PrefixEnum.SESSION_MAP.getValue() + userRs.getUserId());
         String sessionID = IDGenerate.generateSessionID(userRs.getUserId());
@@ -76,6 +76,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         sessionInfo.setCreateDate(new Date());
         sessionInfo.setUpdateTime(new Date());
         sessionInfo.setSessionId(sessionID);
+        sessionInfo.setValid(remberCookie);
         sessionInfo.settId(TerminalEnum.Terminal_WEB.getValue());
         data.put(PrefixEnum.SESSION_MAP.getValue() + sessionID, JSONObject.toJSON(sessionInfo).toString());
         ops.putAll(data);

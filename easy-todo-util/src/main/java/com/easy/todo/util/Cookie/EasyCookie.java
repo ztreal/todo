@@ -4,6 +4,7 @@ import com.easy.todo.util.cookie.encryption.PBECoder;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.Cookie;
+import java.net.URLEncoder;
 
 /**
  * Created with IntelliJ IDEA.
@@ -106,16 +107,18 @@ public class EasyCookie {
 
     public Cookie newCookie(String value) {
         String newValue = "";
+        String tempValue = "";
         if (!StringUtils.isEmpty(value)) {
             try {
-                newValue = isEncrypt() ? PBECoder.encrypt(value,key) : value;
+                tempValue = isEncrypt() ? PBECoder.encrypt(value,key) : value;
+                newValue = URLEncoder.encode(tempValue, "UTF-8");
             } catch (Exception e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         } else {
-            newValue = value;
+            newValue = tempValue;
         }
-        Cookie cookie = new Cookie(name, newValue);
+        Cookie cookie = new Cookie(name, tempValue);
         if (!StringUtils.isBlank(domain)) {
             cookie.setDomain(domain);
         }

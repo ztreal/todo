@@ -23,4 +23,10 @@ public interface TodoDao {
      */
     public List<Todo>  listTodo(String ctxId);
 
+    /**
+     * 根据主键删除待办事项
+     * @param todoId
+     */
+    public void delTodo(String todoId);
+
 }

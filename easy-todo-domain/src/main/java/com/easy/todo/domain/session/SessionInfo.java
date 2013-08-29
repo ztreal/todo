@@ -22,6 +22,11 @@ public class SessionInfo {
 
     public Date updateTime;
 
+    /**
+     * 是否
+     */
+    public boolean Valid;
+
     public Integer gettId() {
         return tId;
     }
@@ -52,5 +57,13 @@ public class SessionInfo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public boolean isValid() {
+        return Valid;
+    }
+
+    public void setValid(boolean valid) {
+        Valid = valid;
     }
 }
