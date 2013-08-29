@@ -61,7 +61,7 @@ public class TodoAction extends BaseAction {
         todo.setCreateDate(new Date());
         todo.setUpdateDate(new Date());
         myTodoService.addTodo(todo);
-        return "OK";
+        return todo.getTodoId();
     }
 
 
