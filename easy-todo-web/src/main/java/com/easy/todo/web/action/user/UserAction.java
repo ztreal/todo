@@ -10,10 +10,7 @@ import com.easy.todo.util.spring.BaseAction;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +57,7 @@ public class UserAction extends BaseAction {
         List<Throwable> exceptionList = new ArrayList<Throwable>();
         //是否记住登陆
         boolean remberCookie = false;
-        if(valid.equals(TodoBaseConstants.COOKIE_REMBER)){
+        if (valid.equals(TodoBaseConstants.COOKIE_REMBER)) {
             remberCookie = true;
         }
         User user = new User();
@@ -69,18 +66,18 @@ public class UserAction extends BaseAction {
         user.setPwd(password);
         String sid = null;
         try {
-             sid = userService.login(user,remberCookie);
+            sid = userService.login(user, remberCookie);
         } catch (Exception e) {
             log.info("login fails email = " + email);
             model.addAttribute("exceptionList", exceptionList);
         }
-        if(StringUtils.isBlank(sid)){
+        if (StringUtils.isBlank(sid)) {
             //生成sessionid失败处理
             log.info(" sid is null  email = " + email);
         }
 
         CookieUtils cookieUtils = new CookieUtils();
-        cookieUtils.addEasyCookie(response, TodoConstantsUtil.domain, TodoConstantsUtil.SESSION_COOKIE_NAME, remberCookie,sid);//cookie有的效期
+        cookieUtils.addEasyCookie(response, TodoConstantsUtil.domain, TodoConstantsUtil.SESSION_COOKIE_NAME, remberCookie, sid);//cookie有的效期
         try {
             response.sendRedirect("/my/my-todo-list");
         } catch (IOException e) {
@@ -88,6 +85,39 @@ public class UserAction extends BaseAction {
             return "index";
         }
 
+        return null;
+    }
+
+
+    @RequestMapping(value = "/quit", method = {RequestMethod.GET,
+            RequestMethod.POST})
+    @ResponseBody
+    public String quit(Model model) {
+
+        try {
+            userService.quit(response, request);
+        } catch (Exception e) {
+            log.error("loginOut error  ", e);
+
+        }
+
+//        CookieUtils cookieUtils = new CookieUtils();
+//        cookieUtils.addEasyCookie(response, TodoConstantsUtil.domain, TodoConstantsUtil.SESSION_COOKIE_NAME, remberCookie,sid);//cookie有的效期
+        try {
+            response.sendRedirect("/index");
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return "index";
+        }
+
+        return null;
+    }
+
+
+    @RequestMapping(value = "/quit", method = {RequestMethod.GET,
+            RequestMethod.POST})
+    @ResponseBody
+    public String getUserNav(Model model) {
         return null;
     }
 

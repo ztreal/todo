@@ -2,6 +2,9 @@ package com.easy.todo.service;
 
 import com.easy.todo.domain.user.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * User: zhangtan
  * Date: 12-9-7
@@ -20,4 +23,10 @@ public interface UserService {
      * @param user
      */
     public String login(User user,boolean remberCookie) throws Exception;
+
+    /**
+     * 退出登录
+      * @param response
+     */
+    public void quit(HttpServletResponse response,HttpServletRequest request);
 }

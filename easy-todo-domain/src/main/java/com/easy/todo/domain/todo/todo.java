@@ -38,6 +38,13 @@ public class Todo {
      */
     public String contextId;
 
+
+    /**
+     * 待办事项状态
+     * @see com.easy.todo.domain.enumerate.TodoStatusEnum
+     */
+    public Integer status;
+
     public Date createDate;
 
     public Date updateDate;
@@ -121,5 +128,13 @@ public class Todo {
 
     public void setContextId(String contextId) {
         this.contextId = contextId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

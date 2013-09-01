@@ -3,24 +3,25 @@ package com.easy.todo.domain.enumerate;
 /**
  * 终端类型枚举.
  * User: zhangtan
- * Date: 13-8-20
- * Time: 下午2:56
+ * Date: 13-8-30
+ * Time: 下午11:31
  */
-public enum TerminalEnum {
+public enum TodoStatusEnum {
 
-    TERMINAL_WEB(1, "网页端"),
-    TERMINAL_MOBILE(2, "手机端");
+    TODO_STATUS_AGENCY(1, "待开始"),
+    TODO_STATUS_COMPLETED(2, "已完成"),
+    TODO_STATUS_DELAY(1, "未完成");
 
     private final int value;
     private final String name;
 
-    TerminalEnum(int intValue, String valueName) {
+    TodoStatusEnum(int intValue, String valueName) {
         this.value = intValue;
         this.name = valueName;
     }
 
     public int  getIntValue(String ValueName) {
-        for (TerminalEnum t : TerminalEnum.values()) {
+        for (TodoStatusEnum t : TodoStatusEnum.values()) {
             if (ValueName.equals(t.getName())) {
                 return t.getValue();
             }
@@ -29,7 +30,7 @@ public enum TerminalEnum {
     }
 
     public static String getValueName(int intValue) {
-        for (TerminalEnum t : TerminalEnum.values()) {
+        for (TodoStatusEnum t : TodoStatusEnum.values()) {
             if (intValue == t.getValue()) {
                 return t.getName();
             }

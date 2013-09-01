@@ -64,22 +64,22 @@
         <!--/span-->
         <div class="span6">
 
-            <div id="addContent" style="margin-bottom: 20px">
+            <div id="addContent" style="margin-bottom: 20px;">
                 <input type="text" class="input-xlarge search-query" id="todoContent">
                 <button type="submit" class="btn" id="add">添加</button>
-
-                <div class="alert alert-success" id="rs" style="display: none">
-
-                </div>
             </div>
 
+            <div style="height: 40px">
+                <div class="alert alert-success" id="rs" style="display: none;">
+                </div>
+            </div>
             <div id="todoListContent">
 
 
 
 
                 #if($todoList)
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
                         <thead>
                         <th width="30px">标记</th>
                         <th>内容</th>
@@ -90,8 +90,8 @@
                             <tr>
                                 <td todoId="$!todo.todoId"></td>
                                 <td>$!todo.content</td>
-                                <td><a href="#"<i class="icon-remove-sign  delTodo"></i></a>
-                                    <a href="#"><i class="icon-ok"></i></a></td>
+                                <td><a href="#"><i class="icon-remove-sign  delTodo"></i></a>
+                                    <a href="#"><i class="icon-ok  finishTodo"></i></a></td>
 
                             </tr>
                             #end
@@ -173,10 +173,10 @@
                 url: "addTodo?content=" + todoContent + "&ctxId=" + ctxId,
                 type: 'post',
                 success: function (data) {
-                    var addContent = "\<tr>\<td todoId=" + data + ">\</td>\<td>" + todoContent + "</td>'<td><a href=\"#\"<i class=\"icon-remove-sign  delTodo\"></i></a> <a href=\"#\"><i class=\"icon-ok\"></i></a></td></tr>\")"
+                    var addContent = "\<tr>\<td todoId=" + data + ">\</td>\<td>" + todoContent + "\</td>\<td>\<a href=\"#\"><i class=\"icon-remove-sign  delTodo\">\</i>\ <a href=\"#\"><i class=\"icon-ok finishTodo\"></i></a></td></tr>\")";
                     $("#todo-content").prepend(addContent);
                     rsContent.css("display", "block");
-                    if (data != null  ) {
+                    if (data != null) {
                         rsContent.addClass("alert alert-success");
                         rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>添加成功!\</strong> ');
                     } else {
@@ -191,12 +191,12 @@
                 }
             });
             btn.button('reset');//将按钮状态初始化到最初
-            rsContent.fadeOut("5000");
+            rsContent.fadeOut(1000);
         });
 
 
-        $(".delTodo").live("click",function () {
-            var thisTr = $(this).parent().parent();
+        $(".delTodo").live("click", function () {
+            var thisTr = $(this).parent().parent().parent();
             var todoId = thisTr.find("td").eq(0).attr("todoid");
             var rsContent = $("#rs");
             rsContent.empty();
@@ -223,8 +223,42 @@
                     rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>服务器异常!\</strong> ');
                 }
             });
-            rsContent.fadeOut("5000");
+            rsContent.fadeOut(1000);
         });
+
+
+
+        $(".finishTodo").live("click", function () {
+                  var thisTr = $(this).parent().parent().parent();
+                  var todoId = thisTr.find("td").eq(0).attr("todoid");
+                  var rsContent = $("#rs");
+                  rsContent.empty();
+                  var ctxId = getActiveCtx();
+                  $.ajax({
+                      async: false,
+                      cache: false,
+                      url: "modifyTodo?todoId=" + todoId + "&todoStatus=2",
+                      type: 'post',
+                      success: function (data) {
+                          rsContent.css("display", "block");
+                          if (data != null && data == "OK") {
+                              rsContent.addClass("alert alert-success");
+                              rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>任务已完成!\</strong> ');
+                              thisTr.remove();
+                          } else {
+                              rsContent.addClass("alert alert-error");
+                              rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>修改任务状态时间!\</strong> ');
+                          }
+                      },
+                      error: function () {
+                          rsContent.css("display", "block");
+                          rsContent.addClass("alert alert-error");
+                          rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>服务器异常!\</strong> ');
+                      }
+                  });
+                  rsContent.fadeOut(1000);
+              });
+
 
 
     })

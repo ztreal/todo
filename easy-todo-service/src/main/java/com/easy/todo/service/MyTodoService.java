@@ -24,14 +24,21 @@ public interface MyTodoService {
     /**
      * 根据上线文id获取本人的待办事项
      *
-     * @param ctxId
+     * @param todo
      * @return
      */
-    public List<Todo> getMyTodoListByCtxId(String ctxId);
+    public List<Todo> getMyTodoListByCtxId(Todo todo);
 
     /**
      * 根据待办事项主键删除一个待办事项
-     * @param todoId
+     * @param todo
      */
-    public void delTodo(String todoId);
+    public void delTodo(Todo todo);
+
+    /**
+     * 修改待办事项状态
+     * @param todo
+     * @see com.easy.todo.domain.enumerate.TodoStatusEnum
+     */
+     public void modifyTodo(Todo todo);
 }

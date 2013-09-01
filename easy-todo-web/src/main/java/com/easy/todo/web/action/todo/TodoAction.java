@@ -1,11 +1,13 @@
 package com.easy.todo.web.action.todo;
 
 import com.easy.todo.domain.context.Context;
+import com.easy.todo.domain.enumerate.TodoStatusEnum;
 import com.easy.todo.domain.todo.Todo;
 import com.easy.todo.service.MyTodoService;
 import com.easy.todo.service.UserService;
 import com.easy.todo.util.other.IDGenerate;
 import com.easy.todo.util.spring.BaseAction;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +46,7 @@ public class TodoAction extends BaseAction {
     @RequestMapping(value = "/my/addTodo", method = {RequestMethod.GET,
             RequestMethod.POST})
     @ResponseBody
-    public String addTodo(@RequestParam("content") String content,@RequestParam("ctxId") String ctxId) {
+    public String addTodo(@RequestParam("content") String content, @RequestParam("ctxId") String ctxId) {
         Todo todo = new Todo();
         Object userId = request.getAttribute("uid");
         if (userId == null) {
@@ -57,21 +59,26 @@ public class TodoAction extends BaseAction {
         todo.setTodoId(IDGenerate.generateTodoID());
         todo.setContent(content);
         todo.setContextId(ctxId);
+        assert userId != null;
         todo.setUsrId(userId.toString());
         todo.setCreateDate(new Date());
         todo.setUpdateDate(new Date());
+        todo.setStatus(TodoStatusEnum.TODO_STATUS_AGENCY.getValue());//默认为初始状态
         myTodoService.addTodo(todo);
         return todo.getTodoId();
     }
 
 
     @RequestMapping(value = "/my/delTodo", method = {RequestMethod.GET,
-               RequestMethod.POST})
-       @ResponseBody
-       public String delTodo(@RequestParam("todoId") String todoId) {
-           myTodoService.delTodo(todoId);
-           return "OK";
-       }
+            RequestMethod.POST})
+    @ResponseBody
+    public String delTodo(@RequestParam("todoId") String todoId) {
+        Todo todo = new Todo();
+        todo.setUsrId(request.getAttribute("uid").toString());
+        todo.setTodoId(todoId);
+        myTodoService.delTodo(todo);
+        return "OK";
+    }
 
     @RequestMapping(value = "/my/my-todo-list", method = {RequestMethod.GET,
             RequestMethod.POST})
@@ -84,16 +91,46 @@ public class TodoAction extends BaseAction {
                 log.error("medthod myToDoList :response error -->", e);
             }
         }
+        assert userId != null;
         List<Context> contextList = myTodoService.getMyContextList(userId.toString());
         model.addAttribute("contextList", contextList);
+        Todo todoQuery =  new Todo();
+        todoQuery.setUsrId(request.getAttribute("uid").toString());
+
         for (Context context : contextList) {
             if (context.defaultActive) {
-                List<Todo> todoList = myTodoService.getMyTodoListByCtxId(context.getId());
+                todoQuery.setContextId(context.getId());
+                List<Todo> todoList = myTodoService.getMyTodoListByCtxId(todoQuery);
                 model.addAttribute("todoList", todoList);
             }
         }
 
         return "todo-list";
+    }
+
+
+    @RequestMapping(value = "/my/modifyTodo", method = {RequestMethod.GET,
+            RequestMethod.POST})
+    @ResponseBody
+    public String modifyTodo(@RequestParam(value = "todoId") String todoId,
+                             @RequestParam(value = "todoStatus", required = false) Integer todoStatus,
+                             @RequestParam(value = "content", required = false) String content) {
+        if(todoStatus==null){
+            return "错误的状态";
+        }
+        Todo todo = new Todo();
+        todo.setTodoId(todoId);
+        todo.setUsrId(request.getAttribute("uid").toString());
+        if (todoStatus != TodoStatusEnum.TODO_STATUS_AGENCY.getValue() && todoStatus != TodoStatusEnum.TODO_STATUS_COMPLETED.getValue() && todoStatus != TodoStatusEnum.TODO_STATUS_DELAY.getValue()) {
+            return "错误的状态";
+        }else{
+            todo.setStatus(todoStatus);
+        }
+        if(StringUtils.isNotBlank(content)){
+            todo.setContent(content);
+        }
+        myTodoService.modifyTodo(todo);
+        return "OK";
     }
 
 }

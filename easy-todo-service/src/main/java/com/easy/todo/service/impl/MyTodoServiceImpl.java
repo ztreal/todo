@@ -54,12 +54,18 @@ public class MyTodoServiceImpl extends BaseService implements MyTodoService {
     }
 
     @Override
-    public List<Todo> getMyTodoListByCtxId(String ctxId) {
-        return todoDao.listTodo(ctxId);
+    public List<Todo> getMyTodoListByCtxId(Todo todo) {
+        return todoDao.listTodo(todo);
     }
 
     @Override
-    public void delTodo(String todoId){
-        todoDao.delTodo(todoId);
+    public void delTodo(Todo todo ){
+        todoDao.delTodo(todo);
     }
+
+    @Override
+      public void modifyTodo(Todo todo){
+
+          todoDao.modifyTodo(todo);
+      }
 }

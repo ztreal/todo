@@ -19,14 +19,20 @@ public interface TodoDao {
 
     /**
      * 根据上下文id获取待办事项列表
-     * @param ctxId
+     * @param todo
      */
-    public List<Todo>  listTodo(String ctxId);
+    public List<Todo>  listTodo(Todo todo);
 
     /**
      * 根据主键删除待办事项
-     * @param todoId
+     * @param todo
      */
-    public void delTodo(String todoId);
+    public void delTodo(Todo todo);
+
+    /**
+     * 根据主键修改待办事项信息
+     * @param todo
+     */
+    public void modifyTodo(Todo todo);
 
 }

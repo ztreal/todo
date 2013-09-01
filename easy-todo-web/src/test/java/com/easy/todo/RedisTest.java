@@ -103,7 +103,7 @@ public class RedisTest extends BaseTestCase {
         sessionInfo.setCreateDate(new Date());
         sessionInfo.setUpdateTime(new Date());
         sessionInfo.setSessionId(sessionID);
-        sessionInfo.settId(TerminalEnum.Terminal_WEB.getValue());
+        sessionInfo.settId(TerminalEnum.TERMINAL_WEB.getValue());
 
         data.put(PrefixEnum.SESSION_MAP +  "bbb", JSONObject.toJSON(sessionInfo).toString());
         data.put("aaa","111");

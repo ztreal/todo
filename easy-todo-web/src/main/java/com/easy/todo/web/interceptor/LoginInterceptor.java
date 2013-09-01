@@ -81,7 +81,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                             } else {
                                 loginCookieValid = true;
                                 sessionInfo.setUpdateTime(new Date());
-                                ops.expire(24L, TimeUnit.HOURS);
+                                ops.expire(7, TimeUnit.DAYS);
                                 ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
                             }
                         } else { //非一周免登陆的有效期为30分钟
@@ -90,7 +90,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                             } else {
                                 loginCookieValid = true;
                                 sessionInfo.setUpdateTime(new Date());
-                                ops.expire(24L, TimeUnit.HOURS);
+                                ops.expire(7, TimeUnit.DAYS);
                                 ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
                             }
                         }
