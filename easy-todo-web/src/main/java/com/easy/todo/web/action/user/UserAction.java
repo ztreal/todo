@@ -114,11 +114,6 @@ public class UserAction extends BaseAction {
     }
 
 
-    @RequestMapping(value = "/quit", method = {RequestMethod.GET,
-            RequestMethod.POST})
-    @ResponseBody
-    public String getUserNav(Model model) {
-        return null;
-    }
+
 
 }

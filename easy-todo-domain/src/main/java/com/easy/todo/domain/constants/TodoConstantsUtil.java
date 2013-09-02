@@ -18,6 +18,8 @@ public class TodoConstantsUtil {
 
     public static String SESSION_COOKIE_NAME = "sid";
 
+    public static String IMG_PATH ;
+
 
     /**
      * cookie有效期，单位分钟
@@ -29,6 +31,7 @@ public class TodoConstantsUtil {
         domain = todoDynamicConstants.getDomain();
         loginCookieSecondTime = todoDynamicConstants.getLoginCookieDayTime() * 24 * 60 * 60;
         cookieKey =  todoDynamicConstants.getCookieKey();
+        IMG_PATH =   todoDynamicConstants.getImgPath();
     }
 
     public TodoDynamicConstants getTodoDynamicConstants() {

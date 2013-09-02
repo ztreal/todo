@@ -26,10 +26,21 @@
         <!--<artifactId>catalina</artifactId>-->
         <!--<version>6.0.37</version>-->
         <!--</dependency>-->
+
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -153,8 +164,8 @@
 
                 <redis.ip>42.121.52.175</redis.ip>
                 <redis.port>6379</redis.port>
-                <cookie.expiry>1</cookie.expiry>
-                <cookie.key>11111</cookie.key>
+                <todo.cookie.key>11111</todo.cookie.key>
+                <todo.img.path>user_head_portrait</todo.img.path>
             </properties>
         </profile>
 

@@ -10,7 +10,8 @@
     <bean id="todoDynamicConstants" class="com.easy.todo.domain.constants.TodoDynamicConstants">
         <property name="domain" value="${todo.domain}"/>
         <property name="loginCookieDayTime" value="${todo.loginCookieDayTime}"/>
-        <property name="cookieKey" value="${cookie.key}" />
+        <property name="cookieKey" value="${todo.cookie.key}" />
+        <property name="imgPath" value="${todo.img.path}" />
     </bean>
 
     <!--<bean id="md5Util" class="com.easy.todo.util.other.Md5Util"/>-->

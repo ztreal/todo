@@ -15,6 +15,8 @@ public class TodoDynamicConstants {
 
     private String cookieKey;
 
+    private String imgPath;
+
     public String getDomain() {
         return domain;
     }
@@ -37,5 +39,13 @@ public class TodoDynamicConstants {
 
     public void setCookieKey(String cookieKey) {
         this.cookieKey = cookieKey;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }

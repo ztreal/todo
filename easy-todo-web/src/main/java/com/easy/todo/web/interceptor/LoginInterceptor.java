@@ -1,6 +1,7 @@
 package com.easy.todo.web.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.easy.todo.domain.constants.TodoBaseConstants;
 import com.easy.todo.domain.constants.TodoConstantsUtil;
 import com.easy.todo.domain.enumerate.PrefixEnum;
 import com.easy.todo.domain.session.SessionInfo;
@@ -81,7 +82,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                             } else {
                                 loginCookieValid = true;
                                 sessionInfo.setUpdateTime(new Date());
-                                ops.expire(7, TimeUnit.DAYS);
+                                ops.expire(TodoBaseConstants.COOKIE_MAX_VALID, TimeUnit.SECONDS);
                                 ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
                             }
                         } else { //非一周免登陆的有效期为30分钟
@@ -90,7 +91,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                             } else {
                                 loginCookieValid = true;
                                 sessionInfo.setUpdateTime(new Date());
-                                ops.expire(7, TimeUnit.DAYS);
+                                ops.expire(TodoBaseConstants.COOKIE_MAX_VALID, TimeUnit.SECONDS);
                                 ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
                             }
                         }

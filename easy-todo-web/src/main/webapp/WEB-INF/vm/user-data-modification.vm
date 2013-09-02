@@ -1,0 +1,131 @@
+#set($page_title ="用户资料修改")
+#set($layout = "/layout/default.vm") ##选择布局页面
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sign in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+
+
+    </style>
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="ico/favicon.png">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="span8">
+
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>完善资料</legend>
+                <div class="control-group">
+                    <label class="control-label" for="disabledInput">登陆名</label>
+
+                    <div class="controls">
+                        <input class="input-xlarge disabled" id="disabledInput" type="text"
+                               placeholder="ztreal@sian.com"
+                               disabled="">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="nickname">您的昵称</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="nickname" name="nickname">
+
+                        <p class="help-block">字母，数字，汉字皆可</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="fine-uploader" >上传头像</label>
+
+                    <div class="controls">
+                        <input class="input-file" id="fine-uploader" name="fine-uploader" type="file">
+                    </div>
+                    <div class="progress progress-striped
+                         active">
+                        <div class="bar"  id="progress"
+                             style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="input01">您的新浪微博账号</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="input01">
+
+                        <p class="help-block">请输入您的您的新浪微博账号，以便我们收录</p>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">保存更改</button>
+                    <button class="btn">取消</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- /container -->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap-transition.js"></script>
+<script src="/js/bootstrap-alert.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/bootstrap-dropdown.js"></script>
+<script src="/js/bootstrap-scrollspy.js"></script>
+<script src="/js/bootstrap-tab.js"></script>
+<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/js/bootstrap-popover.js"></script>
+<script src="/js/bootstrap-button.js"></script>
+<script src="/js/bootstrap-collapse.js"></script>
+<script src="/js/bootstrap-carousel.js"></script>
+<script src="/js/bootstrap-typeahead.js"></script>
+<script src="/js/jquery.ui.widget.js"></script>
+<script src="/js/jquery.iframe-transport.js"></script>
+<script src="/js/jquery.fileupload.js"></script>
+
+<script>
+    jQuery(function ($) {
+        $('#fine-uploader').fileupload({
+            url: '/my/upImg',
+//                dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo(document.body);
+                });
+            },progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+            );
+        }
+
+    });
+    })
+</script>
+</body>
+</html>

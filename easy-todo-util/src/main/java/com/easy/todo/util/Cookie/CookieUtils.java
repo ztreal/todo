@@ -1,5 +1,6 @@
 package com.easy.todo.util.cookie;
 
+import com.easy.todo.domain.constants.TodoBaseConstants;
 import com.easy.todo.domain.constants.TodoConstantsUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -151,10 +152,11 @@ public class CookieUtils {
         cookieSb.append(cookie.getDomain()).append(";");
         cookieSb.append("Max-Age=");
         if(valid) {
-            cookieSb.append(cookie.getMaxAge()) ;
+            cookieSb.append(TodoBaseConstants.COOKIE_MAX_VALID) ;
         }else{
             cookieSb.append("") ;
         }
+        cookieSb.append(";");
         cookieSb.append("HTTPOnly") ;
 
 
