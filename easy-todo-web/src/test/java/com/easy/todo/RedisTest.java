@@ -10,10 +10,7 @@ import com.easy.todo.util.other.IDGenerate;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.BoundHashOperations;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 
 import javax.annotation.Resource;
@@ -37,7 +34,7 @@ public class RedisTest extends BaseTestCase {
 
 
 
-    @Test
+//    @Test
    	public void save() {
         final User user = new User();
         user.setUserId("1");
@@ -57,7 +54,7 @@ public class RedisTest extends BaseTestCase {
    	}
 
 
-    @Test
+//    @Test
    	public void read() {
         final String uid = "1";
    		User user =  redisTemplate.execute(new RedisCallback<User>() {
@@ -80,7 +77,7 @@ public class RedisTest extends BaseTestCase {
    		});
    	}
 
-    @Test
+//    @Test
     public void testAtom() {
         ValueOperations<Serializable, Serializable>   valueOps = redisTemplate.opsForValue();
 //   		users = new DefaultRedisList<String>(KeyUtils.users(), template);
@@ -93,6 +90,13 @@ public class RedisTest extends BaseTestCase {
     }
 
     @Test
+     public void testBase() {
+        BoundValueOperations ops =  redisTemplate.boundValueOps("aaaa");
+        ops.set("111111");
+        System.out.println( ops.get());
+    }
+
+//    @Test
     public void testMap() {
         Map<String, String> data = new HashMap<String, String>();
 
@@ -130,7 +134,7 @@ public class RedisTest extends BaseTestCase {
     }
 
 
-    @Test
+//    @Test
     public void test(){
         System.out.println(TodoConstantsUtil.domain);
     }

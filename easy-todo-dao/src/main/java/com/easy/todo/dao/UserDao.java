@@ -21,4 +21,18 @@ public interface UserDao {
      * @return
      */
     public User selectUserByEmail(String email);
+
+    /**
+     * 修改用户资料
+     * @param user
+     * @return
+     */
+    public User modifyUser(User user);
+
+    /**
+     * 根据主键查询用户信息
+     * @param uid
+     * @return
+     */
+    public User selectUserByUid(String uid);
 }

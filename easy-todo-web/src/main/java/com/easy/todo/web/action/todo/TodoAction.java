@@ -37,6 +37,8 @@ public class TodoAction extends BaseAction {
 
     private HttpServletResponse response;
 
+
+
     @ModelAttribute
     public void setRequestAndResponse(HttpServletRequest request, HttpServletResponse response) {
         this.response = response;
@@ -83,19 +85,21 @@ public class TodoAction extends BaseAction {
     @RequestMapping(value = "/my/my-todo-list", method = {RequestMethod.GET,
             RequestMethod.POST})
     public String myToDoList(Model model) {
-        Object userId = request.getAttribute("uid");
-        if (userId == null) {
+        Object userIdObject = request.getAttribute("uid");
+        String uid = null;
+        if (userIdObject == null) {
             try {
                 response.sendRedirect("login");
             } catch (IOException e) {
                 log.error("medthod myToDoList :response error -->", e);
             }
+        }else{
+            uid =  userIdObject.toString();
         }
-        assert userId != null;
-        List<Context> contextList = myTodoService.getMyContextList(userId.toString());
+        List<Context> contextList = myTodoService.getMyContextList(uid);
         model.addAttribute("contextList", contextList);
         Todo todoQuery =  new Todo();
-        todoQuery.setUsrId(request.getAttribute("uid").toString());
+        todoQuery.setUsrId(uid);
 
         for (Context context : contextList) {
             if (context.defaultActive) {
@@ -104,6 +108,7 @@ public class TodoAction extends BaseAction {
                 model.addAttribute("todoList", todoList);
             }
         }
+        model.addAttribute("userInfo",  userService.getUserInfo(uid));
 
         return "todo-list";
     }

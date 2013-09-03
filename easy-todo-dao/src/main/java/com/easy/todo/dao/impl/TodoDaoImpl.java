@@ -57,7 +57,7 @@ public class TodoDaoImpl implements TodoDao {
             update.set("status", todo.getStatus());
         }
         Query findQuery = new Query();
-        findQuery.addCriteria(where("usrId").is(todo.getUsrId()));
+        findQuery.addCriteria(where("_id").is(todo.getUsrId()));
         findQuery.addCriteria(where("todoId").is(todo.getTodoId()));
         mongoOps.findAndModify(new Query(Criteria.where("todoId").is(todo.getTodoId())), update, Todo.class);
     }

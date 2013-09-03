@@ -28,6 +28,10 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="ico/favicon.png">
+    <style>
+
+
+    </style>
 </head>
 
 <body>
@@ -57,17 +61,26 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="fine-uploader" >上传头像</label>
+                    <label class="control-label" for="fine-uploader">上传头像</label>
 
-                    <div class="controls">
+                    <div class="span2" id="dropzone">
+                        <a href="#" class="thumbnail" id="imgPic">
+                            <img src="http://placehold.it/160x120" id="imgSrc" alt="">
+                        </a>
+                    </div>
+                    <div class="controls" style="display: none">
                         <input class="input-file" id="fine-uploader" name="fine-uploader" type="file">
                     </div>
-                    <div class="progress progress-striped
-                         active">
-                        <div class="bar"  id="progress"
-                             style="width: 0%;"></div>
+                    <div class=" span4" style="display: none" id="progressContent">
+                        <div class="progress progress-striped active" id="progress" style="width:300px">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div class=" span4" style="display: none" id="uploadRs">
+
                     </div>
                 </div>
+
                 <div class="control-group">
                     <label class="control-label" for="input01">您的新浪微博账号</label>
 
@@ -111,20 +124,32 @@
     jQuery(function ($) {
         $('#fine-uploader').fileupload({
             url: '/my/upImg',
-//                dataType: 'json',
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo(document.body);
-                });
-            },progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#progress .bar').css(
-                    'width',
-                    progress + '%'
-            );
-        }
+            dataType: 'json',
+            done: function (e, file) {
+                var rs = $("#uploadRs");
+                rs.empty();
+                rs.css("display", "block");
+                if(file==null||file.result==null){
+                    rs.append("上传失败，请重试");
+                }else{
+                    rs.append(file.result.fileName+"已上传完成，大小为"+file.result.fileSize);
+                    $("#imgSrc").attr("src",""+file.result.filePath);
+                }
+                $("#progressContent").css("display", "none");
+            }, progressall: function (e, data) {
+                $("#progressContent").css("display", "block");
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress').find('.bar').css(
+                        'width',
+                        progress + '%'
+                );
+            }, dropZone: $('#dropzone')
+        });
 
-    });
+
+        $("#imgPic").live("click", function () {
+            $("#fine-uploader").click();
+        })
     })
 </script>
 </body>

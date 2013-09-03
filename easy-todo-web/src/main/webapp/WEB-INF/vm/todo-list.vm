@@ -43,7 +43,10 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
-            <div class="well sidebar-nav" style="margin-top: 50px; ">
+            <div class="well sidebar-nav"  >
+                    <img src="http://placehold.it/160x120" id="imgSrc" alt="" class="thumbnail">
+            </div>
+            <div class="well sidebar-nav">
                 <ul class="nav nav-list" id="ctxList">
                     <li class="nav-header">
                         任务列表
@@ -227,38 +230,36 @@
         });
 
 
-
         $(".finishTodo").live("click", function () {
-                  var thisTr = $(this).parent().parent().parent();
-                  var todoId = thisTr.find("td").eq(0).attr("todoid");
-                  var rsContent = $("#rs");
-                  rsContent.empty();
-                  var ctxId = getActiveCtx();
-                  $.ajax({
-                      async: false,
-                      cache: false,
-                      url: "modifyTodo?todoId=" + todoId + "&todoStatus=2",
-                      type: 'post',
-                      success: function (data) {
-                          rsContent.css("display", "block");
-                          if (data != null && data == "OK") {
-                              rsContent.addClass("alert alert-success");
-                              rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>任务已完成!\</strong> ');
-                              thisTr.remove();
-                          } else {
-                              rsContent.addClass("alert alert-error");
-                              rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>修改任务状态时间!\</strong> ');
-                          }
-                      },
-                      error: function () {
-                          rsContent.css("display", "block");
-                          rsContent.addClass("alert alert-error");
-                          rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>服务器异常!\</strong> ');
-                      }
-                  });
-                  rsContent.fadeOut(1000);
-              });
-
+            var thisTr = $(this).parent().parent().parent();
+            var todoId = thisTr.find("td").eq(0).attr("todoid");
+            var rsContent = $("#rs");
+            rsContent.empty();
+            var ctxId = getActiveCtx();
+            $.ajax({
+                async: false,
+                cache: false,
+                url: "modifyTodo?todoId=" + todoId + "&todoStatus=2",
+                type: 'post',
+                success: function (data) {
+                    rsContent.css("display", "block");
+                    if (data != null && data == "OK") {
+                        rsContent.addClass("alert alert-success");
+                        rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>任务已完成!\</strong> ');
+                        thisTr.remove();
+                    } else {
+                        rsContent.addClass("alert alert-error");
+                        rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>修改任务状态时间!\</strong> ');
+                    }
+                },
+                error: function () {
+                    rsContent.css("display", "block");
+                    rsContent.addClass("alert alert-error");
+                    rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>服务器异常!\</strong> ');
+                }
+            });
+            rsContent.fadeOut(1000);
+        });
 
 
     })

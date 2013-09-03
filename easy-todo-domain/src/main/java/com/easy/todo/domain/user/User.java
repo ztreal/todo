@@ -15,16 +15,9 @@ public class User{
     public Integer sex;
     public Integer  userType;
     public String pwd;
+    public String headPic;
 
-    public User() {
-    }
 
-    public User(String userId, String email, Integer sex, Integer userType) {
-        this.userId = userId;
-        this.email = email;
-        this.sex = sex;
-        this.userType = userType;
-    }
 
     public String getUserId() {
         return userId;
@@ -64,6 +57,14 @@ public class User{
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
     }
 
     public String toString(){
