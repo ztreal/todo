@@ -43,8 +43,13 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
-            <div class="well sidebar-nav"  >
+            <div class="well sidebar-nav">
+                #if($!userInfo.headPic)
+                    <img src="$userInfo.headPic" id="imgSrc" alt="" class="thumbnail">
+                #else
                     <img src="http://placehold.it/160x120" id="imgSrc" alt="" class="thumbnail">
+                #end
+
             </div>
             <div class="well sidebar-nav">
                 <ul class="nav nav-list" id="ctxList">

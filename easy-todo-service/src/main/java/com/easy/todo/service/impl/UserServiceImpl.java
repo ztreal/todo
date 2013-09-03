@@ -165,7 +165,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         BoundValueOperations<Serializable, Serializable> ops = redisTemplate.boundValueOps(PrefixEnum.USERINFO_CACHE.getValue() + uid);
         String userInfoString = null;
         if (ops.get() == null) {
-            user = userDao.selectUserByEmail(uid);
+            user = userDao.selectUserByUid(uid);
             if (user == null) {
                 return null;
             } else {
