@@ -3,6 +3,7 @@ package com.easy.todo.web.action.user;
 import com.easy.todo.service.UserService;
 import com.easy.todo.util.spring.BaseAction;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,7 +48,9 @@ public class UserSelfeManagerAction extends BaseAction {
 
     @RequestMapping(value = "/my/to-userinfo-manager", method = {RequestMethod.GET,
             RequestMethod.POST})
-    public String toUserinfoManage() {
+    public String toUserinfoManage(Model model) {
+        String uid = request.getAttribute("uid").toString();
+        model.addAttribute("userInfo", userService.getUserInfo(uid));
         return "user-data-modification";
     }
 

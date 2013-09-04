@@ -150,10 +150,11 @@ public class CookieUtils {
         cookieSb.append(cookie.getPath()).append(";");
         cookieSb.append("Domain=");
         cookieSb.append(cookie.getDomain()).append(";");
-        cookieSb.append("Max-Age=");
+
         if(valid) {
             cookieSb.append(TodoBaseConstants.COOKIE_MAX_VALID) ;
         }else{
+            cookieSb.append("Max-Age=");
             cookieSb.append("") ;
         }
         cookieSb.append(";");
@@ -161,6 +162,7 @@ public class CookieUtils {
 
 
         log.info(cookieSb.toString());
+//        servletResponse.addCookie(cookie);
         servletResponse.setHeader("Set-Cookie", cookieSb.toString());
 
 

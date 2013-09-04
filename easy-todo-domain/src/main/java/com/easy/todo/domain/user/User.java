@@ -16,7 +16,7 @@ public class User{
     public Integer  userType;
     public String pwd;
     public String headPic;
-
+    public String nickName;
 
 
     public String getUserId() {
@@ -65,6 +65,14 @@ public class User{
 
     public void setHeadPic(String headPic) {
         this.headPic = headPic;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String toString(){

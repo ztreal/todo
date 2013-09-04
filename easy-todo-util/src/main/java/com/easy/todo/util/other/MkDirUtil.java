@@ -1,5 +1,6 @@
 package com.easy.todo.util.other;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,20 +22,26 @@ public class MkDirUtil {
      * @return 新创建的绝对路径
      */
     public static boolean makeDir(String header) {
-        boolean flag = false;
-        String[] sub = header.replaceAll("\\\\","/").split("/");
+        boolean flag = true;
+
+//        if (header.indexOf("\\") == 0 || header.indexOf("/") == 0) {
+//            header = header.substring(1);
+//        }
+        String[] sub = header.replaceAll("\\\\", "/").split("/");
         File dir = null;
         for (String aSub : sub) {
-            if(dir!=null){
+            if (dir != null) {
                 dir = new File(dir + File.separator + aSub);
-            }else{
+            } else {
                 dir = new File(aSub);
             }
-            if (!dir.exists()) {
-                if (dir.mkdir()) {
-                    flag = true;
-                } else {
+            //第一级目录可能是\\转移成/之后再切分为的""
+            if (!dir.exists() && StringUtils.isNotEmpty(dir.toString())) {
+                if (!dir.mkdir()) {
+                    flag = false;
                     log.error("  create " + aSub + "folder error ");
+                }else{
+                    log.info("  create " + aSub + "folder sucess ");
                 }
             }
 

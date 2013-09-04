@@ -41,17 +41,21 @@
     <context:component-scan base-package="com.easy.todo"/>
 
 
-    <!-- 解决字符串乱码 -->
+
+
+
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
-                <bean
-                        class="org.springframework.http.converter.StringHttpMessageConverter">
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <!-- 解决字符串乱码 -->
                     <property name="supportedMediaTypes">
                         <list>
                             <value>text/html;charset=UTF-8</value>
                         </list>
                     </property>
+                    <!-- 解决写入过多字符集在head中 -->
+                    <property name="writeAcceptCharset" value="false"/>
                 </bean>
             </list>
         </property>
@@ -101,6 +105,11 @@
     </bean>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="268435456"/> <!-- 256 megs -->
-    </bean>
+            <property name="maxUploadSize" value="268435456"/> <!-- 256 megs -->
+        </bean>
+
+
+
+
+
 </beans>

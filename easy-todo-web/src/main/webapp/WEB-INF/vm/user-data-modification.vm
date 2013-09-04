@@ -47,16 +47,15 @@
 
                     <div class="controls">
                         <input class="input-xlarge disabled" id="disabledInput" type="text"
-                               placeholder="ztreal@sian.com"
+                               value="$!userInfo.email"
                                disabled="">
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="nickname">您的昵称</label>
 
-                    <div class="controls">
-                        <input type="text" class="input-xlarge" id="nickname" name="nickname">
-
+                    <div class="controls">  $!userInfo.nickname
+                        <input type="text" class="input-xlarge" id="nickname" name="nickname"  value="$!userInfo.nickname">
                         <p class="help-block">字母，数字，汉字皆可</p>
                     </div>
                 </div>
@@ -65,7 +64,13 @@
 
                     <div class="span2" id="dropzone">
                         <a href="#" class="thumbnail" id="imgPic">
-                            <img src="http://placehold.it/160x120" id="imgSrc" alt="">
+                        <img src="
+                                #if($!userInfo.headPic)
+                                $!userInfo.headPic
+                        #else
+                            http://placehold.it/160x120
+                        #end
+                            "  id="imgSrc" alt="">
                         </a>
                     </div>
                     <div class="controls" style="display: none">
@@ -129,11 +134,11 @@
                 var rs = $("#uploadRs");
                 rs.empty();
                 rs.css("display", "block");
-                if(file==null||file.result==null){
+                if (file == null || file.result == null) {
                     rs.append("上传失败，请重试");
-                }else{
-                    rs.append(file.result.fileName+"已上传完成，大小为"+file.result.fileSize);
-                    $("#imgSrc").attr("src",""+file.result.filePath);
+                } else {
+                    rs.append(file.result.fileName + "已上传完成，大小为" + file.result.fileSize);
+                    $("#imgSrc").attr("src", "" + file.result.filePath);
                 }
                 $("#progressContent").css("display", "none");
             }, progressall: function (e, data) {
@@ -144,6 +149,11 @@
                         progress + '%'
                 );
             }, dropZone: $('#dropzone')
+            //            disableImageResize: /Android(?!.*Chrome)|Opera/
+            //                    .test(window.navigator && navigator.userAgent),
+            //                imageMaxWidth: 160,
+            //                imageMaxHeight: 120,
+            //                imageCrop: true // Force cropped images
         });
 
 

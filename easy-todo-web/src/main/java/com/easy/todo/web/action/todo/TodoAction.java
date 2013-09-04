@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,6 @@ public class TodoAction extends BaseAction {
     private HttpServletRequest request;
 
     private HttpServletResponse response;
-
 
 
     @ModelAttribute
@@ -73,12 +73,16 @@ public class TodoAction extends BaseAction {
 
     @RequestMapping(value = "/my/delTodo", method = {RequestMethod.GET,
             RequestMethod.POST})
-    @ResponseBody
-    public String delTodo(@RequestParam("todoId") String todoId) {
+//    @ResponseBody
+    public  String delTodo(@RequestParam("todoId") String todoId) throws IOException {
         Todo todo = new Todo();
         todo.setUsrId(request.getAttribute("uid").toString());
         todo.setTodoId(todoId);
         myTodoService.delTodo(todo);
+        PrintWriter writer = response.getWriter();
+        writer.write("OK");
+        writer.flush();
+
         return "OK";
     }
 
@@ -93,12 +97,12 @@ public class TodoAction extends BaseAction {
             } catch (IOException e) {
                 log.error("medthod myToDoList :response error -->", e);
             }
-        }else{
-            uid =  userIdObject.toString();
+        } else {
+            uid = userIdObject.toString();
         }
         List<Context> contextList = myTodoService.getMyContextList(uid);
         model.addAttribute("contextList", contextList);
-        Todo todoQuery =  new Todo();
+        Todo todoQuery = new Todo();
         todoQuery.setUsrId(uid);
 
         for (Context context : contextList) {
@@ -108,7 +112,7 @@ public class TodoAction extends BaseAction {
                 model.addAttribute("todoList", todoList);
             }
         }
-        model.addAttribute("userInfo",  userService.getUserInfo(uid));
+        model.addAttribute("userInfo", userService.getUserInfo(uid));
 
         return "todo-list";
     }
@@ -120,7 +124,7 @@ public class TodoAction extends BaseAction {
     public String modifyTodo(@RequestParam(value = "todoId") String todoId,
                              @RequestParam(value = "todoStatus", required = false) Integer todoStatus,
                              @RequestParam(value = "content", required = false) String content) {
-        if(todoStatus==null){
+        if (todoStatus == null) {
             return "错误的状态";
         }
         Todo todo = new Todo();
@@ -128,10 +132,10 @@ public class TodoAction extends BaseAction {
         todo.setUsrId(request.getAttribute("uid").toString());
         if (todoStatus != TodoStatusEnum.TODO_STATUS_AGENCY.getValue() && todoStatus != TodoStatusEnum.TODO_STATUS_COMPLETED.getValue() && todoStatus != TodoStatusEnum.TODO_STATUS_DELAY.getValue()) {
             return "错误的状态";
-        }else{
+        } else {
             todo.setStatus(todoStatus);
         }
-        if(StringUtils.isNotBlank(content)){
+        if (StringUtils.isNotBlank(content)) {
             todo.setContent(content);
         }
         myTodoService.modifyTodo(todo);

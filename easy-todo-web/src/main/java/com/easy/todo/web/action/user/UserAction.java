@@ -100,9 +100,6 @@ public class UserAction extends BaseAction {
             log.error("loginOut error  ", e);
 
         }
-
-//        CookieUtils cookieUtils = new CookieUtils();
-//        cookieUtils.addEasyCookie(response, TodoConstantsUtil.domain, TodoConstantsUtil.SESSION_COOKIE_NAME, remberCookie,sid);//cookie有的效期
         try {
             response.sendRedirect("/index");
         } catch (IOException e) {
@@ -112,8 +109,6 @@ public class UserAction extends BaseAction {
 
         return null;
     }
-
-
 
 
 }
