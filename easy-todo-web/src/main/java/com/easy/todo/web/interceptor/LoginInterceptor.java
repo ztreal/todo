@@ -59,6 +59,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private boolean updateCookie(HttpServletRequest request, HttpServletResponse response) {
         //判断session是否有效
         boolean loginCookieValid = false;
+        boolean findFlag = false;
         String cookieSessionId = cookieUtils.getCookieValue(request, TodoConstantsUtil.SESSION_COOKIE_NAME);
         request.setAttribute("sid", cookieSessionId);
         if (StringUtils.isNotEmpty(cookieSessionId)) {
@@ -68,42 +69,43 @@ public class LoginInterceptor implements HandlerInterceptor {
             Map<String, String> redisTatleMap = ops.entries();
 
             for (Map.Entry entry : redisTatleMap.entrySet()) {
+                String sessionKey = entry.getKey().toString();
+                String sessionValue = entry.getValue().toString();
+                SessionInfo sessionInfo = JSONObject.parseObject(sessionValue, SessionInfo.class);
 
-                if (null != entry.getValue()) {
-                    String sessionKey = entry.getValue().toString();
-                    String sessionValue = entry.getValue().toString();
-                    SessionInfo sessionInfo = JSONObject.parseObject(sessionValue, SessionInfo.class);
-                    //根据cookieId从缓存中取出session相关信息
-                    if (sessionInfo.getSessionId().equals(cookieSessionId)) {
-                        //如果是一周免登陆的
-                        if (sessionInfo.isValid()) {
-                            if (((new DateTime(sessionInfo.getUpdateTime())).plusSeconds(TodoConstantsUtil.loginCookieSecondTime).toDate()).before(new Date())) {
-                                ops.delete(sessionKey);
-                            } else {
-                                loginCookieValid = true;
-                                sessionInfo.setUpdateTime(new Date());
-                                ops.expire(TodoBaseConstants.COOKIE_MAX_VALID, TimeUnit.SECONDS);
-                                ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
-                            }
-                        } else { //非一周免登陆的有效期为30分钟
-                            if (((new DateTime(sessionInfo.getUpdateTime())).plusMinutes(sessionTimeout).toDate()).before(new Date())) {
-                                ops.delete(sessionKey);
-                            } else {
-                                loginCookieValid = true;
-                                sessionInfo.setUpdateTime(new Date());
-                                ops.expire(TodoBaseConstants.COOKIE_MAX_VALID, TimeUnit.SECONDS);
-                                ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
-                            }
-                        }
-
-                    //根据cookie中的sessionId在缓存中没有找到相关信息，则删除cookie中的sid
-                    } else  {
-                        Cookie cookie = new Cookie(TodoConstantsUtil.SESSION_COOKIE_NAME, null);
-                        cookie.setMaxAge(0);      //0立刻删除
-                        response.addCookie(cookie);     //如果已经超时则删除
+                //值为空，或者没找到sessionid则continue
+                if (null == entry.getValue()  ) {
+                    continue;
+                }
+                //根据cookieId从缓存中取出session相关信息
+                //如果是一周免登陆的
+                if (sessionInfo.isValid()) {
+                    if (((new DateTime(sessionInfo.getUpdateTime())).plusSeconds(TodoConstantsUtil.loginCookieSecondTime).toDate()).before(new Date())) {
+                        ops.delete(sessionKey);
+                    } else if (sessionInfo.getSessionId().equals(cookieSessionId)){
+                        loginCookieValid = true;
+                        sessionInfo.setUpdateTime(new Date());
+                        ops.expire(TodoBaseConstants.COOKIE_MAX_VALID, TimeUnit.SECONDS);
+                        ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
+                        findFlag = true;
+                    }
+                } else { //非一周免登陆的有效期为30分钟
+                    if (((new DateTime(sessionInfo.getUpdateTime())).plusMinutes(sessionTimeout).toDate()).before(new Date())) {
+                        ops.delete(sessionKey);
+                    } else if(sessionInfo.getSessionId().equals(cookieSessionId)){
+                        loginCookieValid = true;
+                        sessionInfo.setUpdateTime(new Date());
+                        ops.expire(TodoBaseConstants.COOKIE_MAX_VALID, TimeUnit.SECONDS);
+                        ops.put("cookieSessionId", JSONObject.toJSON(sessionInfo).toString());
+                        findFlag = true;
                     }
                 }
-
+            }
+            //根据cookie中的sessionId在缓存中没有找到相关信息，则删除cookie中的sid
+            if (!findFlag) {
+                Cookie cookie = new Cookie(TodoConstantsUtil.SESSION_COOKIE_NAME, null);
+                cookie.setMaxAge(0);      //0立刻删除
+                response.addCookie(cookie);     //如果已经超时则删除
             }
 
         }

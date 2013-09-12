@@ -43,9 +43,9 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
-            <div class="well sidebar-nav">
+            <div class="thumbnail">
                 #if($!userInfo.headPic)
-                    <img src="$userInfo.headPic" id="imgSrc" alt="" class="thumbnail">
+                    <img src="$userInfo.headPic" id="imgSrc" alt="" class="">
                 #else
                     <img src="http://placehold.it/160x120" id="imgSrc" alt="" class="thumbnail">
                 #end
@@ -176,7 +176,7 @@
             rsContent.empty();
             var ctxId = getActiveCtx();
             $.ajax({
-                async: false,
+                async: true,
                 cache: false,
                 url: "addTodo?content=" + todoContent + "&ctxId=" + ctxId,
                 type: 'post',
@@ -210,7 +210,7 @@
             rsContent.empty();
             var ctxId = getActiveCtx();
             $.ajax({
-                async: false,
+                async: true,
                 cache: false,
                 url: "delTodo?todoId=" + todoId,
                 type: 'post',
@@ -242,7 +242,7 @@
             rsContent.empty();
             var ctxId = getActiveCtx();
             $.ajax({
-                async: false,
+                async: true,
                 cache: false,
                 url: "modifyTodo?todoId=" + todoId + "&todoStatus=2",
                 type: 'post',

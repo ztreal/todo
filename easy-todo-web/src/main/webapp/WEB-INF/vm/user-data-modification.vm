@@ -55,22 +55,24 @@
                     <label class="control-label" for="nickname">您的昵称</label>
 
                     <div class="controls">  $!userInfo.nickname
-                        <input type="text" class="input-xlarge" id="nickname" name="nickname"  value="$!userInfo.nickname">
+                        <input type="text" class="input-xlarge" id="nickname" name="nickname"
+                               value="$!userInfo.nickname">
+
                         <p class="help-block">字母，数字，汉字皆可</p>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="fine-uploader">上传头像</label>
 
-                    <div class="span2" id="dropzone">
+                    <div class="span2 " id="dropzone">
                         <a href="#" class="thumbnail" id="imgPic">
-                        <img src="
+                            <img src="
                                 #if($!userInfo.headPic)
                                 $!userInfo.headPic
                         #else
                             http://placehold.it/160x120
                         #end
-                            "  id="imgSrc" alt="">
+                            " id="imgSrc" alt="">
                         </a>
                     </div>
                     <div class="controls" style="display: none">
@@ -96,12 +98,18 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">保存更改</button>
+                    <button type="button" class="btn btn-primary" name="save" id="save">保存更改</button>
                     <button class="btn">取消</button>
                 </div>
             </fieldset>
+            <div style="margin-top:-20px">
+                <div class="alert alert-success" id="rs" style="display:  ;">啊啊a
+                </div>
+            </div>
         </form>
+
     </div>
+
 </div>
 <!-- /container -->
 
@@ -124,6 +132,16 @@
 <script src="/js/jquery.ui.widget.js"></script>
 <script src="/js/jquery.iframe-transport.js"></script>
 <script src="/js/jquery.fileupload.js"></script>
+
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="js/load-image.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="/js/canvas-to-blob.min.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="js/jquery.fileupload-process.js"></script>
+<!-- The File Upload image preview & resize plugin -->
+<script src="js/jquery.fileupload-image.js"></script>
 
 <script>
     jQuery(function ($) {
@@ -149,17 +167,48 @@
                         progress + '%'
                 );
             }, dropZone: $('#dropzone')
-            //            disableImageResize: /Android(?!.*Chrome)|Opera/
-            //                    .test(window.navigator && navigator.userAgent),
-            //                imageMaxWidth: 160,
-            //                imageMaxHeight: 120,
-            //                imageCrop: true // Force cropped images
+//            disableImageResize: /Android(?!.*Chrome)|Opera/
+//                    .test(window.navigator && navigator.userAgent),
+//                imageMaxWidth: 120,
+//                imageMaxHeight: 160,
+//                imageCrop: true // Force cropped images
         });
 
 
         $("#imgPic").live("click", function () {
             $("#fine-uploader").click();
-        })
+        });
+
+
+        $("#save").click()
+        {
+            var nickname = $("#nickname").val();
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/my/modify-userinfo?nickName=" + nickname,
+                type: 'post',
+                success: function (data) {
+                    rsContent.css("display", "block");
+                    if (data != null && data == "OK") {
+                        rsContent.addClass("alert alert-success");
+                        rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>任务已完成!\</strong> ');
+                        thisTr.remove();
+                    } else {
+                        rsContent.addClass("alert alert-error");
+                        rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>修改任务状态时间!\</strong> ');
+                    }
+                },
+                error: function () {
+                    rsContent.css("display", "block");
+                    rsContent.addClass("alert alert-error");
+                    rsContent.append(' \<button data-dismiss="alert" class="close" type="button"\>×</button\>\<strong>服务器异常!\</strong> ');
+                }
+            });
+            rsContent.fadeOut(1000);
+        }
+        )
+        ;
     })
 </script>
 </body>

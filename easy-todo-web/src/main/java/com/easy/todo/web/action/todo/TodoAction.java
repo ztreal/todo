@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -73,15 +72,15 @@ public class TodoAction extends BaseAction {
 
     @RequestMapping(value = "/my/delTodo", method = {RequestMethod.GET,
             RequestMethod.POST})
-//    @ResponseBody
+    @ResponseBody
     public  String delTodo(@RequestParam("todoId") String todoId) throws IOException {
         Todo todo = new Todo();
         todo.setUsrId(request.getAttribute("uid").toString());
         todo.setTodoId(todoId);
         myTodoService.delTodo(todo);
-        PrintWriter writer = response.getWriter();
-        writer.write("OK");
-        writer.flush();
+//        PrintWriter writer = response.getWriter();
+//        writer.write("OK");
+//        writer.flush();
 
         return "OK";
     }

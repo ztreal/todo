@@ -1,13 +1,11 @@
 package com.easy.todo.web.action.user;
 
+import com.easy.todo.domain.user.User;
 import com.easy.todo.service.UserService;
 import com.easy.todo.util.spring.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
@@ -41,7 +39,7 @@ public class UserSelfeManagerAction extends BaseAction {
     @RequestMapping(value = "/my/upImg", method = {RequestMethod.GET,
             RequestMethod.POST})
     @ResponseBody
-    public String  upImg(MultipartHttpServletRequest request) throws IOException {
+    public String upImg(MultipartHttpServletRequest request) throws IOException {
         return userService.uploadUserImg(request);
     }
 
@@ -52,6 +50,21 @@ public class UserSelfeManagerAction extends BaseAction {
         String uid = request.getAttribute("uid").toString();
         model.addAttribute("userInfo", userService.getUserInfo(uid));
         return "user-data-modification";
+    }
+
+
+    @RequestMapping(value = "/my/modify-userinfo", method = {RequestMethod.GET,
+            RequestMethod.POST})
+    @ResponseBody
+    public String modifyUserInfo(@RequestParam(value = "usrId") String usrId,
+                                 @RequestParam(value = "nickName", required = false) String nickName,
+                                 @RequestParam(value = "pwd", required = false) String pwd) {
+        String uid = request.getAttribute("uid").toString();
+        User user = new User();
+        user.setUserId(usrId);
+        user.setNickName(nickName);
+        userService.modifyUserInfo(user);
+        return "OK";
     }
 
 }

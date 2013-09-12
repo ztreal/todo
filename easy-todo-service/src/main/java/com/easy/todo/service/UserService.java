@@ -44,4 +44,10 @@ public interface UserService {
      * @return
      */
     public User getUserInfo(String uid);
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    public void modifyUserInfo(User user);
 }

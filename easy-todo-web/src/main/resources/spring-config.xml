@@ -44,22 +44,22 @@
 
 
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                    <!-- 解决字符串乱码 -->
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>text/html;charset=UTF-8</value>
-                        </list>
-                    </property>
-                    <!-- 解决写入过多字符集在head中 -->
-                    <property name="writeAcceptCharset" value="false"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
+                    <!--&lt;!&ndash; 解决字符串乱码 &ndash;&gt;-->
+                    <!--<property name="supportedMediaTypes">-->
+                        <!--<list>-->
+                            <!--<value>text/html;charset=UTF-8</value>-->
+                        <!--</list>-->
+                    <!--</property>-->
+                    <!--&lt;!&ndash; 解决写入过多字符集在head中 &ndash;&gt;-->
+                    <!--<property name="writeAcceptCharset" value="false"/>-->
+                <!--</bean>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 
     <bean id="velocityConfig"

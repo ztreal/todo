@@ -179,4 +179,10 @@ public class UserServiceImpl extends BaseService implements UserService {
         return user;
     }
 
+    @Override
+    public void modifyUserInfo(User user) {
+        userDao.modifyUser(user);
+    }
+
+
 }
